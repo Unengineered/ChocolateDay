@@ -1,5 +1,5 @@
-import 'package:chocolate_day/components/signing/signin.dart';
-import 'package:chocolate_day/components/signing/signup.dart';
+import 'package:chocolate_day/components/signing/sign_in.dart';
+import 'package:chocolate_day/components/signing/sign_up.dart';
 import 'package:chocolate_day/pages/forgot_password_page.dart';
 import 'package:flutter/material.dart';
 
@@ -14,6 +14,9 @@ class _SigningPageState extends State<SigningPage> {
   @override
   Widget build(BuildContext context) {
     return Container(
+      decoration: BoxDecoration(
+        color: Color(0x2FF1F4FB)
+      ),
       child: Column(
         children: [
           signIn ? SignIn() : SignUp(),
