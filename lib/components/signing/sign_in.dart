@@ -116,10 +116,10 @@ class SignIn extends StatelessWidget {
                               padding: EdgeInsets.symmetric(
                                   horizontal: 35, vertical: 15),
                               child: Text("Anonymous",
-                                  style: kHeadlineLabelStyle.copyWith(
+                                  style: kSubtitleStyle.copyWith(
                                       color: Colors.white))),
                         ),
-                        SizedBox(width: 20),
+                        SizedBox(width: 10),
                         RawMaterialButton(
                           materialTapTargetSize: MaterialTapTargetSize.shrinkWrap,
                           highlightColor: Colors.transparent,
@@ -147,7 +147,7 @@ class SignIn extends StatelessWidget {
                               padding: EdgeInsets.symmetric(
                                   horizontal: 35, vertical: 15),
                               child: Text("Login",
-                                  style: kHeadlineLabelStyle.copyWith(
+                                  style: kSubtitleStyle.copyWith(
                                       color: Colors.white))),
                         ),
                       ],

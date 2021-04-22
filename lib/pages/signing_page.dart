@@ -20,19 +20,20 @@ class _SigningPageState extends State<SigningPage> {
       child: Column(
         children: [
           signIn ? SignIn() : SignUp(),
+          SizedBox(height: 20),
           TextButton(
               onPressed: () {
                 setState(() {
                   signIn = !signIn;
                 });
               },
-              child: Text(signIn ? "Sign up" : "Sign in")),
+              child: Text(signIn ? "Create account" : "Sign in")),
           TextButton(
             onPressed: (){
               Navigator.of(context).push(MaterialPageRoute(builder: (context) => ForgotPasswordPage()));
             },
-            child: Text("Forgot password?"),
-          )
+            child: Text("Forgot password"),
+          ),
         ],
       ),
     );

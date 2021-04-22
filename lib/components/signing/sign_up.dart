@@ -38,7 +38,7 @@ class SignUp extends StatelessWidget {
                   padding: EdgeInsets.all(10),
                   child: Column(
                     mainAxisAlignment: MainAxisAlignment.start,
-                    crossAxisAlignment: CrossAxisAlignment.end,
+                    crossAxisAlignment: CrossAxisAlignment.center,
                     children: [
                       Container(
                         width: MediaQuery.of(context).size.width * 0.80,
