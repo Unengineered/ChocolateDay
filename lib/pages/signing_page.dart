@@ -1,3 +1,4 @@
+import 'package:chocolate_day/components/nav_bar/nav_bar.dart';
 import 'package:chocolate_day/components/signing/sign_in.dart';
 import 'package:chocolate_day/components/signing/sign_up.dart';
 import 'package:chocolate_day/pages/forgot_password_page.dart';
@@ -13,26 +14,35 @@ class _SigningPageState extends State<SigningPage> {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      decoration: BoxDecoration(
-        color: Color(0x2FF1F4FB)
-      ),
+    return SingleChildScrollView(
       child: Column(
         children: [
-          signIn ? SignIn() : SignUp(),
-          SizedBox(height: 20),
-          TextButton(
-              onPressed: () {
-                setState(() {
-                  signIn = !signIn;
-                });
-              },
-              child: Text(signIn ? "Create account" : "Sign in")),
-          TextButton(
-            onPressed: (){
-              Navigator.of(context).push(MaterialPageRoute(builder: (context) => ForgotPasswordPage()));
-            },
-            child: Text("Forgot password"),
+          Container(
+            child: NavBar(navBarStyle: NavBarStyle.LoggedOut),
+          ),
+          Container(
+            decoration: BoxDecoration(
+              color: Color(0x2FF1F4FB)
+            ),
+            child: Column(
+              children: [
+                signIn ? SignIn() : SignUp(),
+                SizedBox(height: 20),
+                TextButton(
+                    onPressed: () {
+                      setState(() {
+                        signIn = !signIn;
+                      });
+                    },
+                    child: Text(signIn ? "Create account" : "Sign in")),
+                TextButton(
+                  onPressed: (){
+                    Navigator.of(context).push(MaterialPageRoute(builder: (context) => ForgotPasswordPage()));
+                  },
+                  child: Text("Forgot password"),
+                ),
+              ],
+            ),
           ),
         ],
       ),

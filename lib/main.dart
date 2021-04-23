@@ -1,4 +1,3 @@
-import 'package:chocolate_day/components/nav_bar/nav_bar.dart';
 import 'package:chocolate_day/pages/home_page.dart';
 import 'package:chocolate_day/pages/signing_page.dart';
 import 'package:firebase_auth/firebase_auth.dart';
@@ -42,14 +41,8 @@ class _MyAppState extends State<MyApp> {
             final bool loggedIn = user.data != null;
 
             print(user.data);
-            return SingleChildScrollView(
-              child: Column(
-                children: [
-                  NavBar(navBarStyle: loggedIn ? NavBarStyle.LoggedIn : NavBarStyle.LoggedOut),
-                  loggedIn ? HomePage() : SigningPage()
-                ],
-              ),
-            );
+            return loggedIn ? HomePage() : SigningPage();
+            //return HomePage();
           },
         )
       ),

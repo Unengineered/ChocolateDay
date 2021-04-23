@@ -50,6 +50,7 @@ flutter:
   # To add assets to your application, add an assets section, like this:
   assets:
     - asset/illustrations/
+    - asset/chocolates/
 
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/assets-and-images/#resolution-aware.
@@ -86,6 +87,13 @@ flutter:
           weight: 200
         - asset: asset/fonts/roxborough-bold.ttf
           weight: 800
+    - family: Telegraf
+      fonts:
+        - asset: asset/fonts/Telegraf-Regular-400.otf
+        - asset: asset/fonts/Telegraf-UltraBold-800.otf
+          weight: 800
+        - asset: asset/fonts/Telegraf-UltraLight-200.otf
+          weight: 200
   #
   # For details regarding fonts from package dependencies,
   # see https://flutter.dev/custom-fonts/#from-packages

@@ -21,7 +21,7 @@ var kTitle1Style = TextStyle(
   fontSize: 22.0,
   fontWeight: FontWeight.bold,
   color: kPrimaryLabelColor,
-  fontFamily: 'SF Pro Text',
+  fontFamily: 'Telegraf',
   decoration: TextDecoration.none,
 );
 var kCardTitleStyle = TextStyle(
