@@ -1,7 +1,7 @@
 import 'package:chocolate_day/model/chocolates.dart';
 import 'package:flutter/material.dart';
 
-import '../../constants.dart';
+import '../../constants/style_constants.dart';
 
 class ChocolateCard extends StatelessWidget {
   final Chocolate chocolate;

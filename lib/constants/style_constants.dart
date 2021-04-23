@@ -17,6 +17,7 @@ var kLargeTitleStyle = TextStyle(
   fontFamily: 'Roxborough',
   decoration: TextDecoration.none,
 );
+
 var kTitle1Style = TextStyle(
   fontSize: 22.0,
   fontWeight: FontWeight.bold,
@@ -24,6 +25,7 @@ var kTitle1Style = TextStyle(
   fontFamily: 'Telegraf',
   decoration: TextDecoration.none,
 );
+
 var kCardTitleStyle = TextStyle(
   fontWeight: FontWeight.bold,
   color: Colors.white,
@@ -31,6 +33,7 @@ var kCardTitleStyle = TextStyle(
   fontFamily: 'SF Pro Text',
   decoration: TextDecoration.none,
 );
+
 var kTitle2Style = TextStyle(
   fontSize: 20.0,
   fontWeight: FontWeight.bold,
@@ -38,6 +41,7 @@ var kTitle2Style = TextStyle(
   fontFamily: 'SF Pro Text',
   decoration: TextDecoration.none,
 );
+
 var kHeadlineLabelStyle = TextStyle(
   fontSize: 17.0,
   fontWeight: FontWeight.w800,
@@ -45,18 +49,21 @@ var kHeadlineLabelStyle = TextStyle(
   fontFamily: 'SF Pro Text',
   decoration: TextDecoration.none,
 );
+
 var kSubtitleStyle = TextStyle(
   fontSize: 16.0,
   color: kSecondaryLabelColor,
   fontFamily: 'SF Pro Text',
   decoration: TextDecoration.none,
 );
+
 var kBodyLabelStyle = TextStyle(
   fontSize: 16.0,
   color: Colors.black,
   fontFamily: 'SF Pro Text',
   decoration: TextDecoration.none,
 );
+
 var kCalloutLabelStyle = TextStyle(
   fontSize: 16.0,
   fontWeight: FontWeight.w800,
@@ -64,33 +71,39 @@ var kCalloutLabelStyle = TextStyle(
   fontFamily: 'SF Pro Text',
   decoration: TextDecoration.none,
 );
+
 var kSecondaryCalloutLabelStyle = TextStyle(
   fontSize: 16.0,
   color: kSecondaryLabelColor,
   fontFamily: 'SF Pro Text',
   decoration: TextDecoration.none,
 );
+
 var kSearchPlaceholderStyle = TextStyle(
   fontSize: 13.0,
   color: kSecondaryLabelColor,
   fontFamily: 'SF Pro Text',
   decoration: TextDecoration.none,
 );
+
 var kSearchTextStyle = TextStyle(
   fontSize: 13.0,
   fontFamily: 'SF Pro Text',
   color: kPrimaryLabelColor,
   decoration: TextDecoration.none,
 );
+
 var kCardSubtitleStyle = TextStyle(
   color: Color(0xE6FFFFFF),
   fontSize: 13.0,
   fontFamily: 'SF Pro Text',
   decoration: TextDecoration.none,
 );
+
 var kCaptionLabelStyle = TextStyle(
   fontSize: 12.0,
   color: kSecondaryLabelColor,
   fontFamily: 'SF Pro Text',
   decoration: TextDecoration.none,
 );
+

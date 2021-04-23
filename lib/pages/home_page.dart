@@ -1,6 +1,6 @@
 import 'package:chocolate_day/components/lists/chocolate_card_list.dart';
 import 'package:chocolate_day/components/nav_bar/nav_bar.dart';
-import 'package:chocolate_day/constants.dart';
+import 'package:chocolate_day/constants/style_constants.dart';
 import 'package:flutter/material.dart';
 
 class HomePage extends StatelessWidget {

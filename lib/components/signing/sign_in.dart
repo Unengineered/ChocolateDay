@@ -1,4 +1,4 @@
-import 'package:chocolate_day/constants.dart';
+import 'package:chocolate_day/constants/style_constants.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';

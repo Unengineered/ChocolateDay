@@ -1,11 +1,17 @@
 import 'package:chocolate_day/components/cards/chocolate_card.dart';
 import 'package:chocolate_day/model/chocolates.dart';
+import 'package:chocolate_day/pages/chocolate_hero_page.dart';
 import 'package:flutter/material.dart';
 
-import '../../constants.dart';
+import '../../constants/style_constants.dart';
 
-class ChocolateCardList extends StatelessWidget {
+class ChocolateCardList extends StatefulWidget {
 
+  @override
+  _ChocolateCardListState createState() => _ChocolateCardListState();
+}
+
+class _ChocolateCardListState extends State<ChocolateCardList> {
   List<Widget> chocolateListWidgets(){
     List<Widget> cards = [];
 
@@ -13,7 +19,12 @@ class ChocolateCardList extends StatelessWidget {
       cards.add(
         Padding(
             padding: EdgeInsets.only(bottom: 30),
-            child: ChocolateCard(chocolate: chocolate),
+            child: GestureDetector(
+                onTap: (){
+                  Navigator.of(context).push(MaterialPageRoute(builder: (context) => HeroChocolatePage(chocolate: chocolate)));
+                },
+                child: Hero(tag: chocolate.title,child: ChocolateCard(chocolate: chocolate)),
+            ),
         ),
       );
     }
@@ -26,11 +37,11 @@ class ChocolateCardList extends StatelessWidget {
     return cards;
   }
 
-
   @override
   Widget build(BuildContext context) {
     return Expanded(
       child: ListView(
+        physics: BouncingScrollPhysics(),
         children: chocolateListWidgets(),
       ),
     );

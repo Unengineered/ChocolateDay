@@ -15,6 +15,7 @@ class _SigningPageState extends State<SigningPage> {
   @override
   Widget build(BuildContext context) {
     return SingleChildScrollView(
+      physics: BouncingScrollPhysics(),
       child: Column(
         children: [
           Container(

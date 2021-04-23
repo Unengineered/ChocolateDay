@@ -27,9 +27,14 @@ class NavBar extends StatelessWidget {
           Spacer(),
           (navBarStyle == NavBarStyle.LoggedIn) ?  Padding(
             padding: EdgeInsets.only(right: 15.0),
-            child: Icon(
-              CupertinoIcons.bag,
-              color: Colors.white,
+            child: GestureDetector(
+              onTap: (){
+                Navigator.of(context).pushNamed('/cart');
+              },
+              child: Icon(
+                CupertinoIcons.bag,
+                color: Colors.white,
+              ),
             ),
           ) : Container(),
 
