@@ -1,14 +1,21 @@
 import 'package:chocolate_day/model/chocolates.dart';
+import 'package:chocolate_day/model/products/chocolate_product.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
 import '../../constants/style_constants.dart';
 
-class ChocolateCard extends StatelessWidget {
-  final Chocolate chocolate;
-  const ChocolateCard({Key key, @required this.chocolate}) : super(key: key);
+class ChocolateCartCard extends StatelessWidget {
+  ChocolateCartCard(
+      {Key key, @required this.chocolateProduct, @required this.delete})
+      : super(key: key);
+  final ChocolateProduct chocolateProduct;
+  final Function delete;
 
   @override
   Widget build(BuildContext context) {
+    final Chocolate chocolate = chocolates.singleWhere(
+        (element) => element.chocolateType == chocolateProduct.chocolateType);
     return Container(
       child: Padding(
         padding: EdgeInsets.symmetric(horizontal: 30.0),
@@ -18,7 +25,7 @@ class ChocolateCard extends StatelessWidget {
             //Shadow
             Container(
               height: MediaQuery.of(context).size.width * 9 / 16 * 0.15,
-              width: MediaQuery.of(context).size.width * 0.6 ,
+              width: MediaQuery.of(context).size.width * 0.6,
               decoration: BoxDecoration(boxShadow: [
                 BoxShadow(
                   color: chocolate.background.colors[0].withOpacity(0.35),
@@ -48,7 +55,8 @@ class ChocolateCard extends StatelessWidget {
                     Row(
                       mainAxisAlignment: MainAxisAlignment.end,
                       children: [
-                        Image.asset("asset/chocolates/${chocolate.illustration}"),
+                        Image.asset(
+                            "asset/chocolates/${chocolate.illustration}"),
                       ],
                     ),
                     Padding(
@@ -57,12 +65,34 @@ class ChocolateCard extends StatelessWidget {
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
-                          Text(chocolate.title,
-                              style: kTitle1Style.copyWith(
-                                  fontSize: 28, color: Colors.white)),
-                          Text("Rs. ${chocolate.price}",
-                              style: kPriceStyle.copyWith(
-                                  fontSize: 18, color: Colors.white))
+                          Column(
+                            mainAxisAlignment: MainAxisAlignment.start,
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              Text(chocolateProduct.toName,
+                                  style: kTitle1Style.copyWith(
+                                      fontSize: 28, color: Colors.white)),
+                              Text(chocolate.title,
+                                  style: kSubtitleStyle.copyWith(
+                                    fontSize: 18,
+                                    color: Colors.white,
+                                  ))
+                            ],
+                          ),
+                          Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            children: [
+                              Text("Rs. ${chocolate.price}",
+                                  style: kPriceStyle.copyWith(
+                                      fontSize: 18, color: Colors.white)),
+                              GestureDetector(
+                                  onTap: delete,
+                                  child: Icon(
+                                    CupertinoIcons.delete_solid,
+                                    color: Colors.white,
+                                  ))
+                            ],
+                          )
                         ],
                       ),
                     )

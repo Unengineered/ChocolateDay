@@ -6,19 +6,19 @@ import 'package:flutter/material.dart';
 class HomePage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    return Container(
-        child: Column(
+    return Scaffold(
+        body: Column(
       children: [
         NavBar(navBarStyle: NavBarStyle.LoggedIn),
         Padding(
-          padding: EdgeInsets.only(top: 28.0),
+          padding: EdgeInsets.only(top: 10.0),
           child: Center(
             child: Container(
               child: Text("Choose your feeling", style: kLargeTitleStyle),
             ),
           ),
         ),
-        SizedBox(height: 20),
+        SizedBox(height: 10),
         ChocolateCardList(),
       ],
     ));

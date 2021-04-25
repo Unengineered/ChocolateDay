@@ -1,5 +1,4 @@
 import 'package:chocolate_day/components/cards/chocolate_card.dart';
-import 'package:chocolate_day/constants/chocolate_type.dart';
 import 'package:chocolate_day/constants/class.dart';
 import 'package:chocolate_day/model/chocolates.dart';
 import 'package:chocolate_day/model/products/chocolate_product.dart';
@@ -9,10 +8,20 @@ import 'package:hive/hive.dart';
 
 import '../constants/style_constants.dart';
 
-class HeroChocolatePage extends StatelessWidget {
+class HeroChocolatePage extends StatefulWidget {
   final Chocolate chocolate;
-  final _formKey = GlobalKey<FormState>();
+
   HeroChocolatePage({Key key, @required this.chocolate}) : super(key: key);
+
+  @override
+  _HeroChocolatePageState createState() => _HeroChocolatePageState();
+}
+
+class _HeroChocolatePageState extends State<HeroChocolatePage> {
+  final _formKey = GlobalKey<FormState>();
+
+  String selectedName = '';
+  Class selectedClass;
 
   void addToCart(ChocolateProduct chocolateProduct) {
     final cart = Hive.box('cart');
@@ -57,8 +66,8 @@ class HeroChocolatePage extends StatelessWidget {
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
                     Hero(
-                        tag: chocolate.title,
-                        child: ChocolateCard(chocolate: chocolate)),
+                        tag: widget.chocolate.title,
+                        child: ChocolateCard(chocolate: widget.chocolate)),
                   ],
                 ),
               ),
@@ -124,10 +133,11 @@ class HeroChocolatePage extends StatelessWidget {
                 splashColor: Colors.transparent,
                 onPressed: () async {
                   addToCart(ChocolateProduct(
-                      chocolateType: ChocolateType.Crush,
+                      chocolateType: widget.chocolate.chocolateType,
                       toClass: Class.D7B,
                       toName: "Akshita",
-                      message: "Hey there"));
+                      message: "Hey there",
+                      cost: widget.chocolate.price));
                 },
                 child: Container(
                     width: MediaQuery.of(context).size.width * 0.85,

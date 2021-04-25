@@ -38,13 +38,20 @@ class NavBar extends StatelessWidget {
             ),
           ) : Container(),
 
-          (navBarStyle == NavBarStyle.LoggedIn) ?  Padding(
-            padding: EdgeInsets.only(right: 8.0),
-            child: Icon(
-              CupertinoIcons.person,
-              color: Colors.white,
-            ),
-          ) : Container()
+          (navBarStyle == NavBarStyle.LoggedIn)
+              ? Padding(
+                  padding: EdgeInsets.only(right: 8.0),
+                  child: GestureDetector(
+                    onTap: () {
+                      Navigator.of(context).pushNamed('/account');
+                    },
+                    child: Icon(
+                      CupertinoIcons.person,
+                      color: Colors.white,
+                    ),
+                  ),
+                )
+              : Container()
         ],
       ),
     );

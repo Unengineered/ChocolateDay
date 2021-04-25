@@ -57,6 +57,14 @@ var kSubtitleStyle = TextStyle(
   decoration: TextDecoration.none,
 );
 
+var kPriceStyle = TextStyle(
+  fontSize: 16.0,
+  fontWeight: FontWeight.w800,
+  color: kSecondaryLabelColor,
+  fontFamily: 'Telegraf',
+  decoration: TextDecoration.none,
+);
+
 var kBodyLabelStyle = TextStyle(
   fontSize: 16.0,
   color: Colors.black,
@@ -107,3 +115,17 @@ var kCaptionLabelStyle = TextStyle(
   decoration: TextDecoration.none,
 );
 
+var kFormInputDecoration = InputDecoration(
+  focusedBorder: OutlineInputBorder(
+      borderSide: BorderSide(color: Colors.black, width: 1.0),
+      borderRadius: BorderRadius.all(Radius.circular(10.0))),
+  enabledBorder: OutlineInputBorder(
+      borderSide: BorderSide(color: Colors.black, width: 1.0),
+      borderRadius: BorderRadius.all(Radius.circular(10.0))),
+  errorBorder: OutlineInputBorder(
+      borderSide: BorderSide(color: Colors.red, width: 1.0),
+      borderRadius: BorderRadius.all(Radius.circular(10.0))),
+  focusedErrorBorder: OutlineInputBorder(
+      borderSide: BorderSide(color: Colors.red, width: 1.0),
+      borderRadius: BorderRadius.all(Radius.circular(10.0))),
+);

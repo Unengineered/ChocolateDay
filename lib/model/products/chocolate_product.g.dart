@@ -22,13 +22,14 @@ class ChocolateProductAdapter extends TypeAdapter<ChocolateProduct> {
       toName: fields[1] as String,
       senderName: fields[3] as String,
       message: fields[4] as String,
+      cost: fields[5] as int,
     );
   }
 
   @override
   void write(BinaryWriter writer, ChocolateProduct obj) {
     writer
-      ..writeByte(5)
+      ..writeByte(6)
       ..writeByte(0)
       ..write(obj.chocolateType)
       ..writeByte(1)
@@ -38,7 +39,9 @@ class ChocolateProductAdapter extends TypeAdapter<ChocolateProduct> {
       ..writeByte(3)
       ..write(obj.senderName)
       ..writeByte(4)
-      ..write(obj.message);
+      ..write(obj.message)
+      ..writeByte(5)
+      ..write(obj.cost);
   }
 
   @override

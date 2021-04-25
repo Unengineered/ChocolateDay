@@ -35,6 +35,8 @@ class ChocolateTypeAdapter extends TypeAdapter<ChocolateType> {
         return ChocolateType.RightSwipe;
       case 10:
         return ChocolateType.SpecialDedication;
+      case 11:
+        return ChocolateType.Imposter;
       default:
         return ChocolateType.BestFriend;
     }
@@ -75,6 +77,9 @@ class ChocolateTypeAdapter extends TypeAdapter<ChocolateType> {
         break;
       case ChocolateType.SpecialDedication:
         writer.writeByte(10);
+        break;
+      case ChocolateType.Imposter:
+        writer.writeByte(11);
         break;
     }
   }

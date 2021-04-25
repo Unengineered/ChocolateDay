@@ -25,5 +25,7 @@ enum ChocolateType {
   @HiveField(9)
   RightSwipe,
   @HiveField(10)
-  SpecialDedication
+  SpecialDedication,
+  @HiveField(11)
+  Imposter
 }

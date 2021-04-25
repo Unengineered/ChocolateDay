@@ -14,38 +14,39 @@ class _SigningPageState extends State<SigningPage> {
 
   @override
   Widget build(BuildContext context) {
-    return SingleChildScrollView(
-      physics: BouncingScrollPhysics(),
-      child: Column(
-        children: [
-          Container(
-            child: NavBar(navBarStyle: NavBarStyle.LoggedOut),
-          ),
-          Container(
-            decoration: BoxDecoration(
-              color: Color(0x2FF1F4FB)
+    return Scaffold(
+      body: SingleChildScrollView(
+        physics: BouncingScrollPhysics(),
+        child: Column(
+          children: [
+            Container(
+              child: NavBar(navBarStyle: NavBarStyle.LoggedOut),
             ),
-            child: Column(
-              children: [
-                signIn ? SignIn() : SignUp(),
-                SizedBox(height: 20),
-                TextButton(
+            Container(
+              decoration: BoxDecoration(color: Color(0x2FF1F4FB)),
+              child: Column(
+                children: [
+                  signIn ? SignIn() : SignUp(),
+                  SizedBox(height: 20),
+                  TextButton(
+                      onPressed: () {
+                        setState(() {
+                          signIn = !signIn;
+                        });
+                      },
+                      child: Text(signIn ? "Create account" : "Sign in")),
+                  TextButton(
                     onPressed: () {
-                      setState(() {
-                        signIn = !signIn;
-                      });
+                      Navigator.of(context).push(MaterialPageRoute(
+                          builder: (context) => ForgotPasswordPage()));
                     },
-                    child: Text(signIn ? "Create account" : "Sign in")),
-                TextButton(
-                  onPressed: (){
-                    Navigator.of(context).push(MaterialPageRoute(builder: (context) => ForgotPasswordPage()));
-                  },
-                  child: Text("Forgot password"),
-                ),
-              ],
+                    child: Text("Forgot password"),
+                  ),
+                ],
+              ),
             ),
-          ),
-        ],
+          ],
+        ),
       ),
     );
   }
