@@ -1,6 +1,7 @@
 import 'package:chocolate_day/constants/style_constants.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:hive/hive.dart';
 
 class AccountPage extends StatelessWidget {
   @override
@@ -14,6 +15,7 @@ class AccountPage extends StatelessWidget {
             highlightColor: Colors.transparent,
             splashColor: Colors.transparent,
             onPressed: () {
+              Hive.box('cart').clear();
               FirebaseAuth.instance.signOut();
               Navigator.of(context).pop();
             },
