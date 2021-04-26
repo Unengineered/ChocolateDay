@@ -15,6 +15,7 @@ class _SignInState extends State<SignIn> {
 
   String errorMsg = '';
   bool obscurePassword = true;
+  bool isLoading = false;
 
   @override
   Widget build(BuildContext context) {
@@ -124,41 +125,51 @@ class _SignInState extends State<SignIn> {
                     Row(
                       mainAxisAlignment: MainAxisAlignment.end,
                       children: [
-                        RawMaterialButton(
-                          materialTapTargetSize:
-                              MaterialTapTargetSize.shrinkWrap,
-                          highlightColor: Colors.transparent,
-                          splashColor: Colors.transparent,
-                          onPressed: () async {
-                            if (_formKey.currentState.validate()) {
-                              print('Validation successful, logging in');
-                              firebaseSignIn(
-                                  email: email.text, password: password.text);
-                            } else {
-                              print("Validation failed");
-                            }
-                          },
-                          child: Container(
-                              decoration: BoxDecoration(
-                                  gradient: LinearGradient(
-                                    begin: Alignment.topLeft,
-                                    end: Alignment.bottomRight,
-                                    colors: [
-                                      Color(0xFF00AEFF),
-                                      Color(0xFF0076FF),
-                                    ],
-                                  ),
-                                  boxShadow: [
-                                    BoxShadow(
-                                        color: kShadowColor, blurRadius: 16.0)
-                                  ],
-                                  borderRadius: BorderRadius.circular(10)),
-                              padding: EdgeInsets.symmetric(
-                                  horizontal: 35, vertical: 15),
-                              child: Text("Login",
-                                  style: kSubtitleStyle.copyWith(
-                                      color: Colors.white))),
-                        ),
+                        !isLoading
+                            ? RawMaterialButton(
+                                materialTapTargetSize:
+                                    MaterialTapTargetSize.shrinkWrap,
+                                highlightColor: Colors.transparent,
+                                splashColor: Colors.transparent,
+                                onPressed: () async {
+                                  if (_formKey.currentState.validate()) {
+                                    print('Validation successful, logging in');
+                                    setState(() {
+                                      isLoading = true;
+                                    });
+                                    firebaseSignIn(
+                                        email: email.text,
+                                        password: password.text);
+                                  } else {
+                                    print("Validation failed");
+                                  }
+                                },
+                                child: Container(
+                                  decoration: BoxDecoration(
+                                      gradient: LinearGradient(
+                                        begin: Alignment.topLeft,
+                                        end: Alignment.bottomRight,
+                                        colors: [
+                                          Color(0xFF00AEFF),
+                                          Color(0xFF0076FF),
+                                        ],
+                                      ),
+                                      boxShadow: [
+                                        BoxShadow(
+                                            color: kShadowColor,
+                                            blurRadius: 16.0)
+                                      ],
+                                      borderRadius: BorderRadius.circular(10)),
+                                  padding: EdgeInsets.symmetric(
+                                      horizontal: 35, vertical: 15),
+                                  child: Text("Login",
+                                      style: kSubtitleStyle.copyWith(
+                                          color: Colors.white)),
+                                ),
+                              )
+                            : CircularProgressIndicator(
+                                valueColor:
+                                    AlwaysStoppedAnimation<Color>(Colors.black))
                       ],
                     ),
                   ],
@@ -189,6 +200,10 @@ class _SignInState extends State<SignIn> {
           errorMsg = "Incorrect password";
         });
       }
+
+      setState(() {
+        isLoading = false;
+      });
     }
   }
 }

@@ -279,6 +279,7 @@ class _CouponFormState extends State<CouponForm> {
           //Space
           SizedBox(height: 20),
 
+          //TODO: Add checker for if the document does not exist.
           //Button
           StreamBuilder<DocumentSnapshot>(
               stream: FirebaseFirestore.instance
@@ -327,8 +328,8 @@ class _CouponFormState extends State<CouponForm> {
                     );
                   }
                 } catch (e) {
-                  print("Could not find coupon in firebase");
                   print("Coupon not found in firebase, checking local cart");
+
                   // ignore: deprecated_member_use
                   return WatchBoxBuilder(
                     box: Hive.box('cart'),

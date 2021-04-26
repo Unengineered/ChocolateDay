@@ -17,6 +17,7 @@ class _SignUpState extends State<SignUp> {
 
   bool obscurePassword = true;
   String errorMsg = '';
+  bool isLoading = false;
 
   @override
   Widget build(BuildContext context) {
@@ -166,17 +167,22 @@ class _SignUpState extends State<SignUp> {
                       Row(
                         mainAxisAlignment: MainAxisAlignment.end,
                         children: [
-                          RawMaterialButton(
-                            materialTapTargetSize:
-                                MaterialTapTargetSize.shrinkWrap,
-                            highlightColor: Colors.transparent,
-                            splashColor: Colors.transparent,
-                            onPressed: () async {
-                              if (_formKey.currentState.validate()) {
-                                print("Validation successful");
-                                firebaseSignUp(
-                                    email: email.text, password: password.text);
-                              } else {
+                          !isLoading
+                              ? RawMaterialButton(
+                                  materialTapTargetSize:
+                                      MaterialTapTargetSize.shrinkWrap,
+                                  highlightColor: Colors.transparent,
+                                  splashColor: Colors.transparent,
+                                  onPressed: () async {
+                                    if (_formKey.currentState.validate()) {
+                                      print("Validation successful");
+                                      setState(() {
+                                        isLoading = true;
+                                      });
+                                      firebaseSignUp(
+                                          email: email.text,
+                                          password: password.text);
+                                    } else {
                                 print("Validation failed");
                               }
                             },
@@ -190,17 +196,22 @@ class _SignUpState extends State<SignUp> {
                                         Color(0xFF0076FF),
                                       ],
                                     ),
-                                    boxShadow: [
-                                      BoxShadow(
-                                          color: kShadowColor, blurRadius: 16.0)
-                                    ],
-                                    borderRadius: BorderRadius.circular(10)),
-                                padding: EdgeInsets.symmetric(
-                                    horizontal: 35, vertical: 15),
-                                child: Text("Create account",
-                                    style: kHeadlineLabelStyle.copyWith(
-                                        color: Colors.white))),
-                          ),
+                                          boxShadow: [
+                                            BoxShadow(
+                                                color: kShadowColor,
+                                                blurRadius: 16.0)
+                                          ],
+                                          borderRadius:
+                                              BorderRadius.circular(10)),
+                                      padding: EdgeInsets.symmetric(
+                                          horizontal: 35, vertical: 15),
+                                      child: Text("Create account",
+                                          style: kHeadlineLabelStyle.copyWith(
+                                              color: Colors.white))),
+                                )
+                              : CircularProgressIndicator(
+                                  valueColor: AlwaysStoppedAnimation<Color>(
+                                      Colors.black)),
                         ],
                       ),
                     ],
@@ -234,5 +245,9 @@ class _SignUpState extends State<SignUp> {
     } catch (e) {
       print(e);
     }
+
+    setState(() {
+      isLoading = false;
+    });
   }
 }
