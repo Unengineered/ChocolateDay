@@ -4,6 +4,7 @@ import 'package:chocolate_day/constants/india_state.dart';
 import 'package:chocolate_day/constants/style_constants.dart';
 import 'package:chocolate_day/model/coupons.dart';
 import 'package:chocolate_day/model/products/coupon_product.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -127,10 +128,9 @@ class _CouponFormState extends State<CouponForm> {
                   DropdownButtonFormField<Class>(
                     decoration: InputDecoration(
                         border: OutlineInputBorder(
-                            borderRadius:
-                                BorderRadius.all(Radius.circular(10.0)),
-                            borderSide:
-                                BorderSide(width: 1, color: Colors.black))),
+                      borderRadius: BorderRadius.all(Radius.circular(10.0)),
+                      borderSide: BorderSide(width: 1, color: Colors.black),
+                    )),
                     hint: Text("Class"),
                     value: classValue,
                     onChanged: (value) {
@@ -280,14 +280,24 @@ class _CouponFormState extends State<CouponForm> {
           SizedBox(height: 20),
 
           //Button
-          // ignore: deprecated_member_use
-          WatchBoxBuilder(
-            box: Hive.box('cart'),
-            builder: (context, cart) {
-              for (var i = 0; i < cart.length; i++) {
-                if (cart.getAt(i) is CouponProduct) {
-                  return Container(
-                    child: RawMaterialButton(
+          StreamBuilder<DocumentSnapshot>(
+              stream: FirebaseFirestore.instance
+                  .collection('Users')
+                  .doc(FirebaseAuth.instance.currentUser.uid)
+                  .snapshots(),
+              builder: (context, snapshot) {
+                if (snapshot.hasError) {
+                  return Text('Error loading coupon status');
+                }
+
+                if (snapshot.connectionState == ConnectionState.waiting) {
+                  return CircularProgressIndicator(
+                      valueColor: AlwaysStoppedAnimation<Color>(Colors.black));
+                }
+
+                try {
+                  if (snapshot.data['coupon'] != null) {
+                    return RawMaterialButton(
                       materialTapTargetSize: MaterialTapTargetSize.shrinkWrap,
                       highlightColor: Colors.transparent,
                       splashColor: Colors.transparent,
@@ -314,57 +324,108 @@ class _CouponFormState extends State<CouponForm> {
                                 style: kSubtitleStyle.copyWith(
                                     color: Colors.white)),
                           )),
-                    ),
+                    );
+                  }
+                } catch (e) {
+                  print("Could not find coupon in firebase");
+                  print("Coupon not found in firebase, checking local cart");
+                  // ignore: deprecated_member_use
+                  return WatchBoxBuilder(
+                    box: Hive.box('cart'),
+                    builder: (context, cart) {
+                      for (var i = 0; i < cart.length; i++) {
+                        if (cart.getAt(i) is CouponProduct) {
+                          print('Found coupon in cart');
+                          return Container(
+                            child: RawMaterialButton(
+                              materialTapTargetSize:
+                                  MaterialTapTargetSize.shrinkWrap,
+                              highlightColor: Colors.transparent,
+                              splashColor: Colors.transparent,
+                              onPressed: () {},
+                              child: Container(
+                                  width:
+                                      MediaQuery.of(context).size.width * 0.85,
+                                  decoration: BoxDecoration(
+                                      gradient: LinearGradient(
+                                        begin: Alignment.topLeft,
+                                        end: Alignment.bottomRight,
+                                        colors: [
+                                          Color(0xFFFF2600),
+                                          Color(0xFFFF0000),
+                                        ],
+                                      ),
+                                      boxShadow: [
+                                        BoxShadow(
+                                            color: kShadowColor,
+                                            blurRadius: 16.0)
+                                      ],
+                                      borderRadius: BorderRadius.circular(10)),
+                                  padding: EdgeInsets.symmetric(
+                                      horizontal: 35, vertical: 15),
+                                  child: Center(
+                                    child: Text("Only 1 coupon allowed",
+                                        style: kSubtitleStyle.copyWith(
+                                            color: Colors.white)),
+                                  )),
+                            ),
+                          );
+                        }
+                      }
+                      print("Not coupon found in local cart");
+                      return Container(
+                        child: RawMaterialButton(
+                          materialTapTargetSize:
+                              MaterialTapTargetSize.shrinkWrap,
+                          highlightColor: Colors.transparent,
+                          splashColor: Colors.transparent,
+                          onPressed: () async {
+                            if (_formKey.currentState.validate()) {
+                              print("Form validated, adding to cart");
+                              addToCart(CouponProduct(
+                                  name: nameController.text,
+                                  studentClass: classValue,
+                                  address: addressController.text,
+                                  city: cityController.text,
+                                  state: stateValue,
+                                  pinCode: pincodeController.text,
+                                  phoneNumber: phoneController.text,
+                                  email:
+                                      FirebaseAuth.instance.currentUser.email));
+                              Navigator.of(context).pop();
+                            }
+                          },
+                          child: Container(
+                              width: MediaQuery.of(context).size.width * 0.85,
+                              decoration: BoxDecoration(
+                                  gradient: LinearGradient(
+                                    begin: Alignment.topLeft,
+                                    end: Alignment.bottomRight,
+                                    colors: [
+                                      Color(0xFF00AEFF),
+                                      Color(0xFF0076FF),
+                                    ],
+                                  ),
+                                  boxShadow: [
+                                    BoxShadow(
+                                        color: kShadowColor, blurRadius: 16.0)
+                                  ],
+                                  borderRadius: BorderRadius.circular(10)),
+                              padding: EdgeInsets.symmetric(
+                                  horizontal: 35, vertical: 15),
+                              child: Center(
+                                child: Text("Add to cart",
+                                    style: kSubtitleStyle.copyWith(
+                                        color: Colors.white)),
+                              )),
+                        ),
+                      );
+                    },
                   );
                 }
-              }
 
-              return Container(
-                child: RawMaterialButton(
-                  materialTapTargetSize: MaterialTapTargetSize.shrinkWrap,
-                  highlightColor: Colors.transparent,
-                  splashColor: Colors.transparent,
-                  onPressed: () async {
-                    if (_formKey.currentState.validate()) {
-                      print("Form validated, adding to cart");
-                      addToCart(CouponProduct(
-                          name: nameController.text,
-                          studentClass: classValue,
-                          address: addressController.text,
-                          city: cityController.text,
-                          state: stateValue,
-                          pinCode: pincodeController.text,
-                          phoneNumber: phoneController.text,
-                          email: FirebaseAuth.instance.currentUser.email));
-                      Navigator.of(context).pop();
-                    }
-                  },
-                  child: Container(
-                      width: MediaQuery.of(context).size.width * 0.85,
-                      decoration: BoxDecoration(
-                          gradient: LinearGradient(
-                            begin: Alignment.topLeft,
-                            end: Alignment.bottomRight,
-                            colors: [
-                              Color(0xFF00AEFF),
-                              Color(0xFF0076FF),
-                            ],
-                          ),
-                          boxShadow: [
-                            BoxShadow(color: kShadowColor, blurRadius: 16.0)
-                          ],
-                          borderRadius: BorderRadius.circular(10)),
-                      padding:
-                          EdgeInsets.symmetric(horizontal: 35, vertical: 15),
-                      child: Center(
-                        child: Text("Add to cart",
-                            style:
-                                kSubtitleStyle.copyWith(color: Colors.white)),
-                      )),
-                ),
-              );
-            },
-          ),
+                return Container();
+              }),
           //Space
           SizedBox(height: 20),
         ],
