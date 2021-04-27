@@ -1,6 +1,10 @@
+import 'dart:convert';
+
+import 'package:chocolate_day/constants/url.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:http/http.dart' as http;
 
 import '../../constants/style_constants.dart';
 
@@ -76,7 +80,7 @@ class _SignUpState extends State<SignUp> {
                                   children: [
                                     TextFormField(
                                         autovalidateMode:
-                                            AutovalidateMode.onUserInteraction,
+                                        AutovalidateMode.onUserInteraction,
                                         validator: (value) {
                                           if (value == null || value == '')
                                             return 'Please enter an email address';
@@ -87,11 +91,11 @@ class _SignUpState extends State<SignUp> {
                                           return null;
                                         },
                                         decoration:
-                                            kFormInputDecoration.copyWith(
-                                                hintText: "Email",
-                                                icon: Icon(CupertinoIcons.mail,
-                                                    color: Colors.black,
-                                                    size: 20)),
+                                        kFormInputDecoration.copyWith(
+                                            hintText: "Email",
+                                            icon: Icon(CupertinoIcons.mail,
+                                                color: Colors.black,
+                                                size: 20)),
                                         controller: email),
                                     SizedBox(
                                       height: 10,
@@ -99,30 +103,30 @@ class _SignUpState extends State<SignUp> {
                                     TextFormField(
                                         obscureText: obscurePassword,
                                         decoration:
-                                            kFormInputDecoration.copyWith(
-                                                suffix: GestureDetector(
-                                                    onTap: () {
-                                                      setState(() {
-                                                        obscurePassword =
-                                                            !obscurePassword;
-                                                      });
-                                                    },
-                                                    child: Icon(
-                                                      obscurePassword
-                                                          ? CupertinoIcons.eye
-                                                          : CupertinoIcons
-                                                              .eye_slash,
-                                                      size: 15,
-                                                    )),
-                                                hintText: "Password",
-                                                icon: Icon(CupertinoIcons.lock,
-                                                    color: Colors.black,
-                                                    size: 20)),
+                                        kFormInputDecoration.copyWith(
+                                            suffix: GestureDetector(
+                                                onTap: () {
+                                                  setState(() {
+                                                    obscurePassword =
+                                                    !obscurePassword;
+                                                  });
+                                                },
+                                                child: Icon(
+                                                  obscurePassword
+                                                      ? CupertinoIcons.eye
+                                                      : CupertinoIcons
+                                                      .eye_slash,
+                                                  size: 15,
+                                                )),
+                                            hintText: "Password",
+                                            icon: Icon(CupertinoIcons.lock,
+                                                color: Colors.black,
+                                                size: 20)),
                                         controller: password),
                                     SizedBox(height: 10),
                                     TextFormField(
                                         autovalidateMode:
-                                            AutovalidateMode.onUserInteraction,
+                                        AutovalidateMode.onUserInteraction,
                                         validator: (value) {
                                           if (value != password.text)
                                             return "Passwords don't match";
@@ -130,31 +134,31 @@ class _SignUpState extends State<SignUp> {
                                         },
                                         obscureText: obscurePassword,
                                         decoration:
-                                            kFormInputDecoration.copyWith(
-                                                suffix: GestureDetector(
-                                                    onTap: () {
-                                                      setState(() {
-                                                        obscurePassword =
-                                                            !obscurePassword;
-                                                      });
-                                                    },
-                                                    child: Icon(
-                                                      obscurePassword
-                                                          ? CupertinoIcons.eye
-                                                          : CupertinoIcons
-                                                              .eye_slash,
-                                                      size: 15,
-                                                    )),
-                                                hintText: "Password",
-                                                icon: Icon(CupertinoIcons.lock,
-                                                    color: Colors.black,
-                                                    size: 20)),
+                                        kFormInputDecoration.copyWith(
+                                            suffix: GestureDetector(
+                                                onTap: () {
+                                                  setState(() {
+                                                    obscurePassword =
+                                                    !obscurePassword;
+                                                  });
+                                                },
+                                                child: Icon(
+                                                  obscurePassword
+                                                      ? CupertinoIcons.eye
+                                                      : CupertinoIcons
+                                                      .eye_slash,
+                                                  size: 15,
+                                                )),
+                                            hintText: "Password",
+                                            icon: Icon(CupertinoIcons.lock,
+                                                color: Colors.black,
+                                                size: 20)),
                                         controller: passwordVerify),
                                     SizedBox(height: 10),
                                     (errorMsg != '')
                                         ? Text(errorMsg,
-                                            style: kSubtitleStyle.copyWith(
-                                                color: Colors.red))
+                                        style: kSubtitleStyle.copyWith(
+                                            color: Colors.red))
                                         : Container(),
                                   ],
                                 ),
@@ -169,20 +173,20 @@ class _SignUpState extends State<SignUp> {
                         children: [
                           !isLoading
                               ? RawMaterialButton(
-                                  materialTapTargetSize:
-                                      MaterialTapTargetSize.shrinkWrap,
-                                  highlightColor: Colors.transparent,
-                                  splashColor: Colors.transparent,
-                                  onPressed: () async {
-                                    if (_formKey.currentState.validate()) {
-                                      print("Validation successful");
-                                      setState(() {
-                                        isLoading = true;
-                                      });
-                                      firebaseSignUp(
-                                          email: email.text,
-                                          password: password.text);
-                                    } else {
+                            materialTapTargetSize:
+                            MaterialTapTargetSize.shrinkWrap,
+                            highlightColor: Colors.transparent,
+                            splashColor: Colors.transparent,
+                            onPressed: () async {
+                              if (_formKey.currentState.validate()) {
+                                print("Validation successful");
+                                setState(() {
+                                  isLoading = true;
+                                });
+                                firebaseSignUp(
+                                    email: email.text,
+                                    password: password.text);
+                              } else {
                                 print("Validation failed");
                               }
                             },
@@ -196,22 +200,22 @@ class _SignUpState extends State<SignUp> {
                                         Color(0xFF0076FF),
                                       ],
                                     ),
-                                          boxShadow: [
-                                            BoxShadow(
-                                                color: kShadowColor,
-                                                blurRadius: 16.0)
-                                          ],
-                                          borderRadius:
-                                              BorderRadius.circular(10)),
-                                      padding: EdgeInsets.symmetric(
-                                          horizontal: 35, vertical: 15),
-                                      child: Text("Create account",
-                                          style: kHeadlineLabelStyle.copyWith(
-                                              color: Colors.white))),
-                                )
+                                    boxShadow: [
+                                      BoxShadow(
+                                          color: kShadowColor,
+                                          blurRadius: 16.0)
+                                    ],
+                                    borderRadius:
+                                    BorderRadius.circular(10)),
+                                padding: EdgeInsets.symmetric(
+                                    horizontal: 35, vertical: 15),
+                                child: Text("Create account",
+                                    style: kHeadlineLabelStyle.copyWith(
+                                        color: Colors.white))),
+                          )
                               : CircularProgressIndicator(
-                                  valueColor: AlwaysStoppedAnimation<Color>(
-                                      Colors.black)),
+                              valueColor: AlwaysStoppedAnimation<Color>(
+                                  Colors.black)),
                         ],
                       ),
                     ],
@@ -225,11 +229,21 @@ class _SignUpState extends State<SignUp> {
     );
   }
 
-  void firebaseSignUp(
-      {@required String email, @required String password}) async {
+  void firebaseSignUp({@required String email, @required String password}) async {
     try {
       await FirebaseAuth.instance
-          .createUserWithEmailAndPassword(email: email, password: password);
+          .createUserWithEmailAndPassword(email: email, password: password)
+          .then((credentials) {
+        print("Sending firestore document creation request");
+        print(credentials.user.uid);
+        print(credentials.user.email);
+        http.post(Uri.parse(kCreateAccountUrl),
+            body: jsonEncode({
+              "email": credentials.user.email,
+              "uid": credentials.user.uid,
+              "couponExists": true
+            }));
+      });
     } on FirebaseAuthException catch (e) {
       if (e.code == 'weak-password') {
         print('The password provided is too weak.');

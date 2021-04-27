@@ -31,6 +31,7 @@ dependencies:
   hive_flutter:
   sliding_up_panel:
   slide_button:
+  http:
 
 
   # The following adds the Cupertino Icons font to your application.

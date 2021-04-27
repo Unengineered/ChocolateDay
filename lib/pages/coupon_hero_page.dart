@@ -287,6 +287,8 @@ class _CouponFormState extends State<CouponForm> {
                   .doc(FirebaseAuth.instance.currentUser.uid)
                   .snapshots(),
               builder: (context, snapshot) {
+                print(FirebaseAuth.instance.currentUser.uid);
+
                 if (snapshot.hasError) {
                   return Text('Error loading coupon status');
                 }
@@ -328,6 +330,7 @@ class _CouponFormState extends State<CouponForm> {
                     );
                   }
                 } catch (e) {
+                  print(e);
                   print("Coupon not found in firebase, checking local cart");
 
                   // ignore: deprecated_member_use
@@ -340,13 +343,13 @@ class _CouponFormState extends State<CouponForm> {
                           return Container(
                             child: RawMaterialButton(
                               materialTapTargetSize:
-                                  MaterialTapTargetSize.shrinkWrap,
+                              MaterialTapTargetSize.shrinkWrap,
                               highlightColor: Colors.transparent,
                               splashColor: Colors.transparent,
                               onPressed: () {},
                               child: Container(
                                   width:
-                                      MediaQuery.of(context).size.width * 0.85,
+                                  MediaQuery.of(context).size.width * 0.85,
                                   decoration: BoxDecoration(
                                       gradient: LinearGradient(
                                         begin: Alignment.topLeft,
@@ -377,7 +380,7 @@ class _CouponFormState extends State<CouponForm> {
                       return Container(
                         child: RawMaterialButton(
                           materialTapTargetSize:
-                              MaterialTapTargetSize.shrinkWrap,
+                          MaterialTapTargetSize.shrinkWrap,
                           highlightColor: Colors.transparent,
                           splashColor: Colors.transparent,
                           onPressed: () async {
@@ -392,7 +395,7 @@ class _CouponFormState extends State<CouponForm> {
                                   pinCode: pincodeController.text,
                                   phoneNumber: phoneController.text,
                                   email:
-                                      FirebaseAuth.instance.currentUser.email));
+                                  FirebaseAuth.instance.currentUser.email));
                               Navigator.of(context).pop();
                             }
                           },

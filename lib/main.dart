@@ -6,6 +6,7 @@ import 'package:chocolate_day/pages/account_page.dart';
 import 'package:chocolate_day/pages/cart.dart';
 import 'package:chocolate_day/pages/home_page.dart';
 import 'package:chocolate_day/pages/signing_page.dart';
+import 'package:chocolate_day/pages/verify_account_page.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:hive/hive.dart';
@@ -65,9 +66,8 @@ class MainScreen extends StatelessWidget {
           stream: auth.authStateChanges(),
           builder: (context, snapshot) {
             if (snapshot.connectionState == ConnectionState.active) {
-              if (snapshot.data == null) {
-                return SigningPage();
-              }
+              if (snapshot.data == null) return SigningPage();
+              if (!auth.currentUser.emailVerified) return VerifyAccountPage();
               return HomePage();
             } else {
               return Scaffold(
