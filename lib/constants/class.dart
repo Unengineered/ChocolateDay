@@ -1,4 +1,5 @@
 import 'package:hive/hive.dart';
+
 part 'class.g.dart';
 
 @HiveType(typeId: 1)
@@ -76,15 +77,10 @@ enum Class {
   @HiveField(35)
   D17B,
   @HiveField(36)
-  D17C,
-  @HiveField(37)
-  D18,
-  @HiveField(38)
-  D19A,
-  @HiveField(39)
-  D19B,
-  @HiveField(40)
-  D19C,
-  @HiveField(41)
-  D20,
-}
+  D17C,@HiveField(37)
+D18,@HiveField(38)
+D19A,@HiveField(39)
+D19B,@HiveField(40)
+D19C,@HiveField(41)
+D20,@HiveField(42)
+Division,}

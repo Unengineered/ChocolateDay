@@ -18,6 +18,9 @@ class _CartTotalState extends State<CartTotal> {
   Widget build(BuildContext context) {
     print("Rebuilding cartTotal");
     return SlidingUpPanel(
+      onPanelClosed: () {
+        FocusScope.of(context).requestFocus(new FocusNode());
+      },
       backdropEnabled: true,
       borderRadius: BorderRadius.only(
           topLeft: Radius.circular(20), topRight: Radius.circular(20)),
@@ -167,6 +170,33 @@ class _BillState extends State<Bill> {
               Text("Total:"),
               Text("Rs. $total", style: kTitle2Style.copyWith(fontSize: 25))
             ],
+          ),
+          SizedBox(height: 20),
+          RawMaterialButton(
+            materialTapTargetSize: MaterialTapTargetSize.shrinkWrap,
+            highlightColor: Colors.transparent,
+            splashColor: Colors.transparent,
+            onPressed: () async {},
+            child: Container(
+                width: MediaQuery.of(context).size.width * 0.85,
+                decoration: BoxDecoration(
+                    gradient: LinearGradient(
+                      begin: Alignment.topLeft,
+                      end: Alignment.bottomRight,
+                      colors: [
+                        Color(0xFF00AEFF),
+                        Color(0xFF0076FF),
+                      ],
+                    ),
+                    boxShadow: [
+                      BoxShadow(color: kShadowColor, blurRadius: 16.0)
+                    ],
+                    borderRadius: BorderRadius.circular(10)),
+                padding: EdgeInsets.symmetric(horizontal: 35, vertical: 15),
+                child: Center(
+                  child: Text("Checkout",
+                      style: kSubtitleStyle.copyWith(color: Colors.white)),
+                )),
           )
         ],
       ),

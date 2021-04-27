@@ -45,71 +45,77 @@ class _CartItemListState extends State<CartItemList> {
   @override
   Widget build(BuildContext context) {
     List<Product> products = [];
-    // ignore: deprecated_member_use
-    return WatchBoxBuilder(
-      box: cart,
-      builder: (builder, cart) {
-        double cartValue = 0.0;
-        for (int i = 0; i < cart.length; i++) {
-          final product = cart.getAt(i);
-          products.add(product);
-
-          if (product is ChocolateProduct) {
-            cartValue += product.cost;
-          }
-
-          if (product is CouponProduct) {
-            cartValue += 30.0;
-          }
-        }
-
-        return Stack(
-          children: [
-            SafeArea(
-                child: SingleChildScrollView(
-                    physics: BouncingScrollPhysics(),
-                    child: Padding(
-                      padding: EdgeInsets.only(top: 10, bottom: 80.0),
-                      child: Column(
-                        children: [
-                          Padding(
-                            padding: EdgeInsets.only(top: 28.0, left: 40),
-                            child: Row(
-                              mainAxisAlignment: MainAxisAlignment.center,
-                              crossAxisAlignment: CrossAxisAlignment.center,
-                              children: [
-                                GestureDetector(
-                                  onTap: () {
-                                    Navigator.pop(context);
-                                  },
-                                  child: Container(
-                                    width: 36,
-                                    height: 36,
-                                    decoration: BoxDecoration(
-                                      borderRadius: BorderRadius.circular(12),
-                                      color:
-                                          kPrimaryLabelColor.withOpacity(0.8),
-                                    ),
-                                    child:
-                                        Icon(Icons.close, color: Colors.white),
-                                  ),
-                                ),
-                                SizedBox(width: 15),
-                                Expanded(
-                                  child: Text("Cart", style: kLargeTitleStyle),
-                                )
-                              ],
-                            ),
-                          ),
-                          SizedBox(height: 20),
-                          CartItems(cart: cart),
-                        ],
-                      ),
-                    ))),
-            CartTotal(cartValue: cartValue)
-          ],
-        );
+    return GestureDetector(
+      onTap: () {
+        FocusScope.of(context).requestFocus(new FocusNode());
       },
+      // ignore: deprecated_member_use
+      child: WatchBoxBuilder(
+        box: cart,
+        builder: (builder, cart) {
+          double cartValue = 0.0;
+          for (int i = 0; i < cart.length; i++) {
+            final product = cart.getAt(i);
+            products.add(product);
+
+            if (product is ChocolateProduct) {
+              cartValue += product.cost;
+            }
+
+            if (product is CouponProduct) {
+              cartValue += 30.0;
+            }
+          }
+
+          return Stack(
+            children: [
+              SafeArea(
+                  child: SingleChildScrollView(
+                      physics: BouncingScrollPhysics(),
+                      child: Padding(
+                        padding: EdgeInsets.only(top: 10, bottom: 80.0),
+                        child: Column(
+                          children: [
+                            Padding(
+                              padding: EdgeInsets.only(top: 28.0, left: 40),
+                              child: Row(
+                                mainAxisAlignment: MainAxisAlignment.center,
+                                crossAxisAlignment: CrossAxisAlignment.center,
+                                children: [
+                                  GestureDetector(
+                                    onTap: () {
+                                      Navigator.pop(context);
+                                    },
+                                    child: Container(
+                                      width: 36,
+                                      height: 36,
+                                      decoration: BoxDecoration(
+                                        borderRadius: BorderRadius.circular(12),
+                                        color:
+                                            kPrimaryLabelColor.withOpacity(0.8),
+                                      ),
+                                      child: Icon(Icons.close,
+                                          color: Colors.white),
+                                    ),
+                                  ),
+                                  SizedBox(width: 15),
+                                  Expanded(
+                                    child:
+                                        Text("Cart", style: kLargeTitleStyle),
+                                  )
+                                ],
+                              ),
+                            ),
+                            SizedBox(height: 20),
+                            CartItems(cart: cart),
+                          ],
+                        ),
+                      ))),
+              CartTotal(cartValue: cartValue)
+            ],
+          );
+        },
+      ),
     );
   }
 }

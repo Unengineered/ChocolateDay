@@ -75,5 +75,7 @@ enum IndiaState {
   @HiveField(35)
   Lakshadweep,
   @HiveField(36)
-  Puducherry
+  Puducherry,
+  @HiveField(37)
+  State,
 }

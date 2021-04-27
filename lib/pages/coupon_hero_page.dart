@@ -82,14 +82,14 @@ class _CouponFormState extends State<CouponForm> {
     cart.add(couponProduct);
   }
 
-  Class classValue = Class.D7B;
+  Class classValue = Class.Division;
   final nameController = TextEditingController();
   final rollnoController = TextEditingController();
   final phoneController = TextEditingController();
   final addressController = TextEditingController();
   final pincodeController = TextEditingController();
   final cityController = TextEditingController();
-  IndiaState stateValue = IndiaState.Maharashtra;
+  IndiaState stateValue = IndiaState.State;
 
   @override
   Widget build(BuildContext context) {
@@ -126,6 +126,12 @@ class _CouponFormState extends State<CouponForm> {
 
                   //Class
                   DropdownButtonFormField<Class>(
+                    autovalidateMode: AutovalidateMode.onUserInteraction,
+                    validator: (value) {
+                      if (value == Class.Division)
+                        return "Please choose a class";
+                      return null;
+                    },
                     decoration: InputDecoration(
                         border: OutlineInputBorder(
                       borderRadius: BorderRadius.all(Radius.circular(10.0)),
@@ -249,6 +255,12 @@ class _CouponFormState extends State<CouponForm> {
                   //State
                   Container(
                     child: DropdownButtonFormField<IndiaState>(
+                      autovalidateMode: AutovalidateMode.onUserInteraction,
+                      validator: (value) {
+                        if (value == IndiaState.State)
+                          return "Please choose a state";
+                        return null;
+                      },
                       decoration: InputDecoration(
                           border: OutlineInputBorder(
                               borderRadius:
