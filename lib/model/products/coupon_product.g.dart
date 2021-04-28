@@ -25,13 +25,14 @@ class CouponProductAdapter extends TypeAdapter<CouponProduct> {
       pinCode: fields[5] as String,
       phoneNumber: fields[6] as String,
       email: fields[7] as String,
+      rollNo: fields[8] as int,
     );
   }
 
   @override
   void write(BinaryWriter writer, CouponProduct obj) {
     writer
-      ..writeByte(8)
+      ..writeByte(9)
       ..writeByte(0)
       ..write(obj.name)
       ..writeByte(1)
@@ -47,7 +48,9 @@ class CouponProductAdapter extends TypeAdapter<CouponProduct> {
       ..writeByte(6)
       ..write(obj.phoneNumber)
       ..writeByte(7)
-      ..write(obj.email);
+      ..write(obj.email)
+      ..writeByte(8)
+      ..write(obj.rollNo);
   }
 
   @override

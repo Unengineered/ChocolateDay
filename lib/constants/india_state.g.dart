@@ -85,6 +85,8 @@ class IndiaStateAdapter extends TypeAdapter<IndiaState> {
         return IndiaState.Lakshadweep;
       case 36:
         return IndiaState.Puducherry;
+      case 37:
+        return IndiaState.State;
       default:
         return IndiaState.AndhraPradesh;
     }
@@ -200,6 +202,9 @@ class IndiaStateAdapter extends TypeAdapter<IndiaState> {
         break;
       case IndiaState.Puducherry:
         writer.writeByte(36);
+        break;
+      case IndiaState.State:
+        writer.writeByte(37);
         break;
     }
   }

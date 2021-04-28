@@ -32,13 +32,18 @@ class CouponProduct implements Product {
   @HiveField(7)
   final String email;
 
-  CouponProduct(
-      {@required this.name,
-      @required this.studentClass,
-      @required this.address,
-      @required this.city,
-      @required this.state,
-      @required this.pinCode,
-      @required this.phoneNumber,
-      @required this.email});
+  @HiveField(8)
+  final int rollNo;
+
+  CouponProduct({
+    @required this.name,
+    @required this.studentClass,
+    @required this.address,
+    @required this.city,
+    @required this.state,
+    @required this.pinCode,
+    @required this.phoneNumber,
+    @required this.email,
+    @required this.rollNo,
+  });
 }

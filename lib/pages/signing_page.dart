@@ -18,6 +18,8 @@ class _SigningPageState extends State<SigningPage> {
       body: SingleChildScrollView(
         physics: BouncingScrollPhysics(),
         child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          crossAxisAlignment: CrossAxisAlignment.center,
           children: [
             Container(
               child: NavBar(navBarStyle: NavBarStyle.LoggedOut),
@@ -25,22 +27,53 @@ class _SigningPageState extends State<SigningPage> {
             Container(
               decoration: BoxDecoration(color: Color(0x2FF1F4FB)),
               child: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                crossAxisAlignment: CrossAxisAlignment.center,
                 children: [
                   signIn ? SignIn() : SignUp(),
                   SizedBox(height: 20),
-                  TextButton(
-                      onPressed: () {
-                        setState(() {
-                          signIn = !signIn;
-                        });
-                      },
-                      child: Text(signIn ? "Create account" : "Sign in")),
-                  TextButton(
-                    onPressed: () {
-                      Navigator.of(context).push(MaterialPageRoute(
-                          builder: (context) => ForgotPasswordPage()));
-                    },
-                    child: Text("Forgot password"),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    crossAxisAlignment: CrossAxisAlignment.center,
+                    children: [
+                      TextButton(
+                          onPressed: () {
+                            setState(() {
+                              signIn = !signIn;
+                            });
+                          },
+                          child: Text(signIn ? "Create account" : "Sign in")),
+                      SizedBox(width: 10),
+                      TextButton(
+                        onPressed: () {
+                          Navigator.of(context).push(MaterialPageRoute(
+                              builder: (context) => ForgotPasswordPage()));
+                        },
+                        child: Text("Forgot password"),
+                      )
+                    ],
+                  ),
+                  SizedBox(height: 10),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    crossAxisAlignment: CrossAxisAlignment.center,
+                    children: [
+                      TextButton(
+                          onPressed: () {
+                            setState(() {
+                              signIn = !signIn;
+                            });
+                          },
+                          child: Text("Privacy Policy")),
+                      SizedBox(width: 10),
+                      TextButton(
+                        onPressed: () {
+                          Navigator.of(context).push(MaterialPageRoute(
+                              builder: (context) => ForgotPasswordPage()));
+                        },
+                        child: Text("Terms & Conditions"),
+                      )
+                    ],
                   ),
                 ],
               ),

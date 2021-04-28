@@ -40,7 +40,7 @@ class NavBar extends StatelessWidget {
 
           (navBarStyle == NavBarStyle.LoggedIn)
               ? Padding(
-                  padding: EdgeInsets.only(right: 8.0),
+                  padding: EdgeInsets.only(right: 15.0),
                   child: GestureDetector(
                     onTap: () {
                       Navigator.of(context).pushNamed('/account');

@@ -69,7 +69,7 @@ class ChocolateCartCard extends StatelessWidget {
                             mainAxisAlignment: MainAxisAlignment.start,
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
-                              Text(chocolateProduct.toName,
+                              Text(getNameFromEmail(chocolateProduct.toName),
                                   style: kTitle1Style.copyWith(
                                       fontSize: 28, color: Colors.white)),
                               Text(chocolate.title,
@@ -104,5 +104,17 @@ class ChocolateCartCard extends StatelessWidget {
         ),
       ),
     );
+  }
+
+  String getNameFromEmail(String email) {
+    String sub = email.substring(0, 5);
+
+    if (sub.contains(RegExp(r'[0-9]'))) {
+      email = email.substring(3);
+    }
+
+    RegExp reg1 = new RegExp(r'[a-z]\w+');
+    Iterable matches = reg1.allMatches(email);
+    return (email.substring(matches.first.start, matches.first.end));
   }
 }

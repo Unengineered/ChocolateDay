@@ -41,7 +41,7 @@ var chocolates = [
             Color.fromRGBO(102, 215, 255, 1),
             Color.fromRGBO(86, 153, 254, 1)
           ]),
-      price: 20),
+      price: 10),
   Chocolate(
       chocolateType: ChocolateType.DiscordGang,
       title: "Discord\nGang",

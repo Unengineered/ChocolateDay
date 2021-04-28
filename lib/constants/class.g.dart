@@ -97,6 +97,8 @@ class ClassAdapter extends TypeAdapter<Class> {
         return Class.D19C;
       case 41:
         return Class.D20;
+      case 42:
+        return Class.Division;
       default:
         return Class.D1E;
     }
@@ -230,6 +232,9 @@ class ClassAdapter extends TypeAdapter<Class> {
         break;
       case Class.D20:
         writer.writeByte(41);
+        break;
+      case Class.Division:
+        writer.writeByte(42);
         break;
     }
   }
