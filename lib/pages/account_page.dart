@@ -2,6 +2,7 @@ import 'dart:convert';
 
 import 'package:chocolate_day/constants/style_constants.dart';
 import 'package:chocolate_day/constants/url.dart';
+import 'package:chocolate_day/pages/orders_page.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:hive/hive.dart';
@@ -40,8 +41,9 @@ class AccountPage extends StatelessWidget {
                       if (response.hasData) {
                         final body = jsonDecode(response.data.body);
                         final coupon = body['coupon'];
-
-                        print(coupon.toString());
+                        final List<Map<String, dynamic>> orders =
+                            List<Map<String, dynamic>>.from(body['orders']);
+                        print(body.toString());
 
                         if (coupon != null) {
                           return Column(
@@ -75,6 +77,45 @@ class AccountPage extends StatelessWidget {
                               SizedBox(height: 20),
                               if (coupon['phone_number'] != null)
                                 Text("Phone Number: ${coupon['phone_number']}"),
+                              SizedBox(height: 20),
+                              RawMaterialButton(
+                                materialTapTargetSize:
+                                    MaterialTapTargetSize.shrinkWrap,
+                                highlightColor: Colors.transparent,
+                                splashColor: Colors.transparent,
+                                onPressed: () {
+                                  Navigator.of(context).push(MaterialPageRoute(
+                                      builder: (context) =>
+                                          OrdersPage(orders: orders)));
+                                },
+                                child: Container(
+                                    height: 50,
+                                    width: MediaQuery.of(context).size.width *
+                                        0.85,
+                                    decoration: BoxDecoration(
+                                        gradient: LinearGradient(
+                                          begin: Alignment.topLeft,
+                                          end: Alignment.bottomRight,
+                                          colors: [
+                                            Color(0xFF00FF04),
+                                            Color(0xFF00FF66),
+                                          ],
+                                        ),
+                                        boxShadow: [
+                                          BoxShadow(
+                                              color: kShadowColor,
+                                              blurRadius: 16.0)
+                                        ],
+                                        borderRadius:
+                                            BorderRadius.circular(10)),
+                                    padding: EdgeInsets.symmetric(
+                                        horizontal: 35, vertical: 15),
+                                    child: Center(
+                                      child: Text("Orders",
+                                          style: kSubtitleStyle.copyWith(
+                                              color: Colors.black)),
+                                    )),
+                              ),
                             ],
                           );
                         }
@@ -82,34 +123,6 @@ class AccountPage extends StatelessWidget {
 
                       return Container();
                     }),
-              ),
-              SizedBox(height: 20),
-              RawMaterialButton(
-                materialTapTargetSize: MaterialTapTargetSize.shrinkWrap,
-                highlightColor: Colors.transparent,
-                splashColor: Colors.transparent,
-                onPressed: () {},
-                child: Container(
-                    height: 50,
-                    width: MediaQuery.of(context).size.width * 0.85,
-                    decoration: BoxDecoration(
-                        gradient: LinearGradient(
-                          begin: Alignment.topLeft,
-                          end: Alignment.bottomRight,
-                          colors: [
-                            Color(0xFF00FF04),
-                            Color(0xFF00FF66),
-                          ],
-                        ),
-                        boxShadow: [
-                          BoxShadow(color: kShadowColor, blurRadius: 16.0)
-                        ],
-                        borderRadius: BorderRadius.circular(10)),
-                    padding: EdgeInsets.symmetric(horizontal: 35, vertical: 15),
-                    child: Center(
-                      child: Text("Orders",
-                          style: kSubtitleStyle.copyWith(color: Colors.black)),
-                    )),
               ),
               SizedBox(height: 20),
               RawMaterialButton(

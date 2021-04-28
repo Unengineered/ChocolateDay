@@ -64,7 +64,7 @@ class _CheckoutState extends State<Checkout> {
           "address": product.address,
           "city": product.city,
           "state": product.state.toString().split('.')[1],
-          "postcode": product.pinCode,
+          "postcode": int.parse(product.pinCode),
           "email": product.email,
           "phone_number": product.phoneNumber
         };
@@ -108,6 +108,7 @@ class _CheckoutState extends State<Checkout> {
   }
 
   void activateRazorPay() async {
+    print(jsonEncode(checkout));
     final response = await http.post(Uri.parse('$kRazorPayUrl'),
         body: jsonEncode(checkout),
         headers: <String, String>{
