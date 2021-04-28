@@ -110,7 +110,6 @@ class _HeroChocolatePageState extends State<HeroChocolatePage> {
                                   onChanged: (value) {
                                     setState(() {
                                       isAnonymous = value;
-                                      selectedEmail = '';
                                     });
                                   }),
                             )
