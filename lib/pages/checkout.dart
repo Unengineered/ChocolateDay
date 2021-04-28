@@ -26,17 +26,18 @@ class _CheckoutState extends State<Checkout> {
   bool showRazorPay = false;
   String htmlDoc = '';
   Map<String, dynamic> checkout = Map<String, dynamic>();
+  final cart = Hive.box('cart');
 
   @override
   void initState() {
     print("Making checkout JSON");
     checkout['uid'] = FirebaseAuth.instance.currentUser.uid;
+    checkout['email'] = FirebaseAuth.instance.currentUser.email;
     checkout['order'] = Map<String, dynamic>();
     checkout['order']['donation'] = widget.donation;
     checkout['order']['chocolates'] = [];
     checkout['couponData'] = null;
 
-    final cart = Hive.box('cart');
     for (int i = 0; i < cart.length; i++) {
       final product = cart.getAt(i);
       if (product is ChocolateProduct) {
@@ -90,7 +91,8 @@ class _CheckoutState extends State<Checkout> {
             Navigator.pop(context);
           } else if (element.data == 'SUCCESS_HELLO') {
             print('PAYMENT SUCCESSFUL!!!!!!!');
-            Navigator.pop(context);
+            cart.clear();
+            Navigator.of(context).pushNamed('/');
           }
         });
 

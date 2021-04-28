@@ -8,6 +8,7 @@ import 'package:chocolate_day/model/products/chocolate_product.dart';
 import 'package:chocolate_day/name_drop_down/NameDropDown.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:hive/hive.dart';
 import 'package:http/http.dart' as http;
 
@@ -205,6 +206,9 @@ class _HeroChocolatePageState extends State<HeroChocolatePage> {
                         SizedBox(height: 18),
                         //Message
                         TextFormField(
+                          inputFormatters: [
+                            new LengthLimitingTextInputFormatter(5000),
+                          ],
                           autovalidateMode: AutovalidateMode.onUserInteraction,
                           controller: messageController,
                           validator: (value) {
@@ -214,7 +218,7 @@ class _HeroChocolatePageState extends State<HeroChocolatePage> {
                           },
                           maxLines: null,
                           decoration: kFormInputDecoration.copyWith(
-                              hintText: "Message"),
+                              hintText: "Message (Limit: 5000)"),
                         ),
                         SizedBox(height: 18),
 
