@@ -320,19 +320,23 @@ class _CouponFormState extends State<CouponForm> {
                   try {
                     if (response.data.body == '') throw Error();
                     final body = jsonDecode(response.data.body);
-                    if (body['coupon'] != null || body['coupon'] != '') {
-                      return RawMaterialButton(
-                        materialTapTargetSize: MaterialTapTargetSize.shrinkWrap,
-                        highlightColor: Colors.transparent,
-                        splashColor: Colors.transparent,
-                        onPressed: () {},
-                        child: Container(
-                            width: MediaQuery.of(context).size.width * 0.85,
-                            decoration: BoxDecoration(
-                                gradient: LinearGradient(
-                                  begin: Alignment.topLeft,
-                                  end: Alignment.bottomRight,
-                                  colors: [
+                    print(body['coupon']);
+
+                    if (body['coupon'] == null || body['coupon'] == '')
+                      throw Error();
+
+                    return RawMaterialButton(
+                      materialTapTargetSize: MaterialTapTargetSize.shrinkWrap,
+                      highlightColor: Colors.transparent,
+                      splashColor: Colors.transparent,
+                      onPressed: () {},
+                      child: Container(
+                          width: MediaQuery.of(context).size.width * 0.85,
+                          decoration: BoxDecoration(
+                              gradient: LinearGradient(
+                                begin: Alignment.topLeft,
+                                end: Alignment.bottomRight,
+                                colors: [
                                     Color(0xFFFF2600),
                                     Color(0xFFFF0000),
                                   ],
@@ -350,7 +354,6 @@ class _CouponFormState extends State<CouponForm> {
                                       color: Colors.white)),
                             )),
                       );
-                    }
                   } catch (e) {
                     // ignore: deprecated_member_use
                     return WatchBoxBuilder(

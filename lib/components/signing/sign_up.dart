@@ -234,15 +234,17 @@ class _SignUpState extends State<SignUp> {
       await FirebaseAuth.instance
           .createUserWithEmailAndPassword(email: email, password: password)
           .then((credentials) {
-        print("Sending firestore document creation request");
+        print("Sending document creation request");
         print(credentials.user.uid);
         print(credentials.user.email);
         http.post(Uri.parse(kCreateAccountUrl),
             body: jsonEncode({
               "email": credentials.user.email,
               "uid": credentials.user.uid,
-              "couponExists": true
-            }));
+            }),
+            headers: <String, String>{
+              'Content-Type': 'application/json; charset=UTF-8',
+            });
       });
     } on FirebaseAuthException catch (e) {
       if (e.code == 'weak-password') {

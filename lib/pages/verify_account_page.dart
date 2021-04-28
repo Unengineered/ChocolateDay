@@ -120,7 +120,7 @@ class VerifyAccountPage extends StatelessWidget {
                               padding: EdgeInsets.symmetric(
                                   horizontal: 35, vertical: 15),
                               child: Center(
-                                child: Text("Verify email",
+                                child: Text("Send email",
                                     style: kSubtitleStyle.copyWith(
                                         color: Colors.white)),
                               )),
