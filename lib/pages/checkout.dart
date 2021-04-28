@@ -43,10 +43,9 @@ class _CheckoutState extends State<Checkout> {
       if (product is ChocolateProduct) {
         Map<String, dynamic> chocolate = {
           "chocolateName": product.chocolateType.toString().split('.')[1],
-          "isAnonymous":
-              (product.senderName == null || product.senderName == '')
-                  ? true
-                  : false,
+          "anonymous": (product.senderName == null || product.senderName == '')
+              ? true
+              : false,
           "senderName": product.senderName,
           "receiverClass": product.toClass.toString().split('.')[1],
           "receiverEmail": product.toName,
