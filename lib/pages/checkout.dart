@@ -16,7 +16,6 @@ import 'package:http/http.dart' as http;
 //conditional import
 import '../razorpay/UiFake.dart' if (dart.library.html) 'dart:ui' as ui;
 
-//TODO: Fix bug where orders are being generated / reused
 
 class Checkout extends StatefulWidget {
   final double donation;
@@ -89,7 +88,8 @@ class _CheckoutState extends State<Checkout> {
   Widget build(BuildContext context) {
     if (showRazorPay) {
       //register view factory
-      ui.platformViewRegistry.registerViewFactory("rzp-html", (int viewId) {
+      ui.platformViewRegistry.registerViewFactory("rzp-html-${widget.key}",
+          (int viewId) {
         IFrameElement element = IFrameElement();
 
         //Event Listener
@@ -124,7 +124,7 @@ class _CheckoutState extends State<Checkout> {
               gravity: ToastGravity.BOTTOM,
               toastDuration: Duration(seconds: 2),
             );
-            Navigator.of(context, rootNavigator: true).pushNamed('/');
+            Navigator.of(context, rootNavigator: true).pop();
           } else if (element.data == 'SUCCESS_PAYMENT') {
             print('PAYMENT SUCCESSFUL!!!!!!!');
             cart.clear();
@@ -155,7 +155,7 @@ class _CheckoutState extends State<Checkout> {
               gravity: ToastGravity.BOTTOM,
               toastDuration: Duration(seconds: 2),
             );
-            Navigator.of(context, rootNavigator: true).pushNamed('/');
+            Navigator.of(context, rootNavigator: true).pop();
           }
         });
 
@@ -168,7 +168,7 @@ class _CheckoutState extends State<Checkout> {
     }
 
     return (showRazorPay)
-        ? HtmlElementView(key: UniqueKey(), viewType: 'rzp-html')
+        ? HtmlElementView(key: UniqueKey(), viewType: 'rzp-html-${widget.key}')
         : Container();
   }
 

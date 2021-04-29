@@ -20,6 +20,7 @@ class _OrderCardListState extends State<OrderCardList> {
         Padding(
           padding: EdgeInsets.only(bottom: 30),
           child: OrderCard(
+              donation: order['donation'],
               orderId: order['orderId'],
               orderStatus: order['orderStatus'],
               chocolates: List<Map<String, dynamic>>.from(order['chocolates']),

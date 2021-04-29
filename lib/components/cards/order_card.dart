@@ -8,13 +8,15 @@ class OrderCard extends StatelessWidget {
   final String orderId;
   final List<Map<String, dynamic>> chocolates;
   final int index;
+  final double donation;
 
   const OrderCard(
       {Key key,
       @required this.orderStatus,
       @required this.orderId,
       this.chocolates,
-      @required this.index})
+      @required this.index,
+      @required this.donation})
       : super(key: key);
 
   @override
@@ -57,6 +59,7 @@ class OrderCard extends StatelessWidget {
                 )
               ]),
             ),
+
             //Card
             Container(
               decoration: BoxDecoration(
@@ -76,9 +79,18 @@ class OrderCard extends StatelessWidget {
                           style: kTitle1Style.copyWith(
                               fontSize: 28, color: textColor)),
                       buildChocolates(chocolates),
-                      Text(status,
-                          style: kSubtitleStyle.copyWith(
-                              fontSize: 18, color: textColor))
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          Text(status,
+                              style: kSubtitleStyle.copyWith(
+                                  fontSize: 15, color: textColor)),
+                          if (donation != 0)
+                            Text("Donation: ${donation.toString()}",
+                                style: kSubtitleStyle.copyWith(
+                                    fontSize: 15, color: textColor))
+                        ],
+                      )
                     ],
                   ),
                 ),
