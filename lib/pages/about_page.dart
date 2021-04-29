@@ -60,6 +60,21 @@ class AboutPage extends StatelessWidget {
             SizedBox(height: 10.0),
             Padding(
               padding: EdgeInsets.symmetric(horizontal: 30.0),
+              child: Text("Contact Us",
+                  style: kLargeTitleStyle.copyWith(
+                      fontSize: 20.0, color: Colors.white)),
+            ),
+            SizedBox(height: 10.0),
+            Expanded(
+              child: Padding(
+                padding: EdgeInsets.symmetric(horizontal: 30.0),
+                child: Text("cultural.vesit@ves.ac.in",
+                    style: kSubtitleStyle.copyWith(
+                        height: 1.8, color: Colors.white)),
+              ),
+            ),
+            Padding(
+              padding: EdgeInsets.symmetric(horizontal: 30.0),
               child: Text("v1.0",
                   style: kSubtitleStyle.copyWith(
                       height: 1.8, color: Colors.white)),
