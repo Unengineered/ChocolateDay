@@ -160,6 +160,8 @@ class _CheckoutState extends State<Checkout> {
         });
 
         element.id = 'unengineered-iframe';
+        element.sandbox.value =
+            "allow-forms allow-modals allow-popups allow-popups-to-escape-sandbox allow-top-navigation allow-scripts allow-same-origin allow-orientation-lock";
         element.requestFullscreen();
         element.srcdoc = htmlDoc;
         element.style.border = 'none';
@@ -168,8 +170,16 @@ class _CheckoutState extends State<Checkout> {
     }
 
     return (showRazorPay)
-        ? HtmlElementView(key: UniqueKey(), viewType: 'rzp-html-${widget.key}')
-        : Container();
+        ? Stack(
+            children: [
+              Text("Hello Stack"),
+              HtmlElementView(
+                  key: UniqueKey(), viewType: 'rzp-html-${widget.key}'),
+            ],
+          )
+        : Container(
+            child: Text("Hello"),
+          );
   }
 
   void activateRazorPay() async {
