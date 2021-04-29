@@ -1,5 +1,6 @@
 import 'package:badges/badges.dart';
 import 'package:chocolate_day/constants/style_constants.dart';
+import 'package:chocolate_day/pages/about_page.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:hive/hive.dart';
@@ -74,6 +75,18 @@ class NavBar extends StatelessWidget {
                       color: Colors.white,
                     ),
                   ),
+                )
+              : Container(),
+          (navBarStyle != NavBarStyle.LoggedIn)
+              ? Padding(
+                  padding: EdgeInsets.only(right: 15.0),
+                  child: GestureDetector(
+                      onTap: () {
+                        Navigator.of(context).push(MaterialPageRoute(
+                            builder: (context) => AboutPage()));
+                      },
+                      child: Text("About",
+                          style: kSubtitleStyle.copyWith(color: Colors.white))),
                 )
               : Container()
         ],

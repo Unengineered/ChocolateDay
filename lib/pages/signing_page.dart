@@ -4,6 +4,9 @@ import 'package:chocolate_day/components/signing/sign_up.dart';
 import 'package:chocolate_day/pages/forgot_password_page.dart';
 import 'package:flutter/material.dart';
 
+import 'privacy_and_policy.dart';
+import 'terms_and_conditions.dart';
+
 class SigningPage extends StatefulWidget {
   @override
   _SigningPageState createState() => _SigningPageState();
@@ -60,16 +63,15 @@ class _SigningPageState extends State<SigningPage> {
                     children: [
                       TextButton(
                           onPressed: () {
-                            setState(() {
-                              signIn = !signIn;
-                            });
+                            Navigator.of(context).push(MaterialPageRoute(
+                                builder: (context) => PrivacyPolicyPage()));
                           },
                           child: Text("Privacy Policy")),
                       SizedBox(width: 10),
                       TextButton(
                         onPressed: () {
                           Navigator.of(context).push(MaterialPageRoute(
-                              builder: (context) => ForgotPasswordPage()));
+                              builder: (context) => TermsAndConditionsPage()));
                         },
                         child: Text("Terms & Conditions"),
                       )

@@ -76,10 +76,10 @@ class AccountPage extends StatelessWidget {
                               if (coupon['phone_number'] != null)
                                 Text("Phone Number: ${coupon['phone_number']}"),
                               SizedBox(height: 20),
-                              buildOrdersButton(context, body['orders']),
                             ],
                           );
                         }
+                        buildOrdersButton(context, body['orders']);
                       }
 
                       return Container();
