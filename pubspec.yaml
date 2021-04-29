@@ -32,6 +32,7 @@ dependencies:
   sliding_up_panel:
   slide_button:
   http:
+  badges:
 
 
   # The following adds the Cupertino Icons font to your application.
