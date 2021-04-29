@@ -129,3 +129,24 @@ var kFormInputDecoration = InputDecoration(
       borderSide: BorderSide(color: Colors.red, width: 1.0),
       borderRadius: BorderRadius.all(Radius.circular(10.0))),
 );
+
+var orderBackgrounds = {
+  'failed': LinearGradient(
+      begin: Alignment.centerLeft,
+      end: Alignment.centerRight,
+      colors: [
+        Color.fromRGBO(238, 77, 78, 1.0),
+        Color.fromRGBO(243, 82, 83, 1.0)
+      ]),
+  'payment_pending': LinearGradient(
+      begin: Alignment.centerLeft,
+      end: Alignment.centerRight,
+      colors: [Color.fromRGBO(77, 76, 76, 1), Color.fromRGBO(37, 29, 29, 1)]),
+  'captured': LinearGradient(
+      begin: Alignment.centerLeft,
+      end: Alignment.centerRight,
+      colors: [
+        Color.fromRGBO(103, 255, 0, 1.0),
+        Color.fromRGBO(0, 255, 0, 1.0)
+      ])
+};

@@ -16,6 +16,8 @@ import 'package:http/http.dart' as http;
 //conditional import
 import '../razorpay/UiFake.dart' if (dart.library.html) 'dart:ui' as ui;
 
+//TODO: Fix bug where orders are being generated / reused
+
 class Checkout extends StatefulWidget {
   final double donation;
 
@@ -168,6 +170,7 @@ class _CheckoutState extends State<Checkout> {
 
   void activateRazorPay() async {
     print(jsonEncode(checkout));
+    print("Getting order id from chocolate factory");
     final response = await http.post(Uri.parse('$kRazorPayUrl'),
         body: jsonEncode(checkout),
         headers: <String, String>{
