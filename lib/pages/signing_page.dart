@@ -2,6 +2,7 @@ import 'package:chocolate_day/components/nav_bar/nav_bar.dart';
 import 'package:chocolate_day/components/signing/sign_in.dart';
 import 'package:chocolate_day/components/signing/sign_up.dart';
 import 'package:chocolate_day/pages/forgot_password_page.dart';
+import 'package:chocolate_day/pages/return_policy.dart';
 import 'package:flutter/material.dart';
 
 import 'privacy_and_policy.dart';
@@ -74,9 +75,23 @@ class _SigningPageState extends State<SigningPage> {
                               builder: (context) => TermsAndConditionsPage()));
                         },
                         child: Text("Terms & Conditions"),
-                      )
+                      ),
                     ],
                   ),
+                  SizedBox(height: 10),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    crossAxisAlignment: CrossAxisAlignment.center,
+                    children: [
+                      TextButton(
+                        onPressed: () {
+                          Navigator.of(context).push(MaterialPageRoute(
+                              builder: (context) => RefundPage()));
+                        },
+                        child: Text("Refund & Cancellation"),
+                      ),
+                    ],
+                  )
                 ],
               ),
             ),
