@@ -1,4 +1,3 @@
-import 'dart:js' as js;
 
 import 'package:chocolate_day/constants/style_constants.dart';
 import 'package:chocolate_day/pages/checkout.dart';
@@ -239,12 +238,6 @@ class _BillState extends State<Bill> {
                       )),
                 ),
 
-          FlatButton(
-            child: Text('Button'),
-            onPressed: () {
-              js.context.callMethod('open', ['/razorpay.html']);
-            },
-          )
         ],
       ),
     );

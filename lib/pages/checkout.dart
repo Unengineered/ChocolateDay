@@ -170,16 +170,8 @@ class _CheckoutState extends State<Checkout> {
     }
 
     return (showRazorPay)
-        ? Stack(
-            children: [
-              Text("Hello Stack"),
-              HtmlElementView(
-                  key: UniqueKey(), viewType: 'rzp-html-${widget.key}'),
-            ],
-          )
-        : Container(
-            child: Text("Hello"),
-          );
+        ? HtmlElementView(key: UniqueKey(), viewType: 'rzp-html-${widget.key}')
+        : Container();
   }
 
   void activateRazorPay() async {
