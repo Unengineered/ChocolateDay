@@ -25,7 +25,7 @@ class AboutPage extends StatelessWidget {
         width: MediaQuery.of(context).size.width,
         color: Colors.black,
         child: Column(
-          mainAxisAlignment: MainAxisAlignment.end,
+          crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             Padding(
               padding: EdgeInsets.only(top: 20.0, left: 20.0),
@@ -56,7 +56,15 @@ class AboutPage extends StatelessWidget {
                     style: kSubtitleStyle.copyWith(
                         height: 1.8, color: Colors.white)),
               ),
-            )
+            ),
+            SizedBox(height: 10.0),
+            Padding(
+              padding: EdgeInsets.symmetric(horizontal: 30.0),
+              child: Text("v1.0",
+                  style: kSubtitleStyle.copyWith(
+                      height: 1.8, color: Colors.white)),
+            ),
+            SizedBox(height: 10.0),
           ],
         ),
       ),
