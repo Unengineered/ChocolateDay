@@ -18,6 +18,17 @@ class _ChocolateCardListState extends State<ChocolateCardList> {
   List<Widget> chocolateListWidgets(){
     List<Widget> cards = [];
 
+    cards.add(Padding(
+        padding: EdgeInsets.only(bottom: 30),
+        child: GestureDetector(
+            onTap: () {
+              Navigator.of(context).push(
+                  MaterialPageRoute(builder: (context) => CouponHeroPage()));
+            },
+            child: Hero(
+                tag: coupons[0].title,
+                child: CouponCard(coupon: coupons[0])))));
+
     for (var chocolate in chocolates) {
       cards.add(
         Padding(
@@ -35,17 +46,6 @@ class _ChocolateCardListState extends State<ChocolateCardList> {
         ),
       );
     }
-
-    cards.add(Padding(
-        padding: EdgeInsets.only(bottom: 30),
-        child: GestureDetector(
-            onTap: () {
-              Navigator.of(context).push(
-                  MaterialPageRoute(builder: (context) => CouponHeroPage()));
-            },
-            child: Hero(
-                tag: coupons[0].title,
-                child: CouponCard(coupon: coupons[0])))));
 
     cards.add(Padding(
         padding: EdgeInsets.only(top: 12, bottom: 20),

@@ -185,8 +185,8 @@ class _SignInState extends State<SignIn> {
   void firebaseSignIn(
       {@required String email, @required String password}) async {
     try {
-      await FirebaseAuth.instance.signInWithEmailAndPassword(
-          email: email.trim(), password: password.trim());
+      await FirebaseAuth.instance
+          .signInWithEmailAndPassword(email: email.trim(), password: password);
     } on FirebaseAuthException catch (e) {
       print(e.toString());
       if (e.code == 'user-not-found') {

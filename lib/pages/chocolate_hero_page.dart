@@ -129,7 +129,7 @@ class _HeroChocolatePageState extends State<HeroChocolatePage> {
                         Row(
                           mainAxisAlignment: MainAxisAlignment.start,
                           children: [
-                            Text("Send", style: kTitle1Style),
+                            Text("Send to", style: kTitle1Style),
                           ],
                         ),
 
