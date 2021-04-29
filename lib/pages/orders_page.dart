@@ -1,3 +1,4 @@
+import 'package:chocolate_day/constants/style_constants.dart';
 import 'package:flutter/material.dart';
 
 class OrdersPage extends StatelessWidget {
@@ -8,18 +9,25 @@ class OrdersPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: Column(
-        children: [
-          ListView.builder(
-            shrinkWrap: true,
-            itemCount: orders.length,
-            itemBuilder: (context, index) {
-              final order = orders[index];
-              final List<Map<String, dynamic>> chocolates =
-                  List<Map<String, dynamic>>.from(order['chocolates']);
-              return Column(
-                children: [
-                  Text(
+      body: (orders.length == 0)
+          ? Center(
+              child: Text(
+                "You have no orders :(",
+                style: kSubtitleStyle,
+              ),
+            )
+          : Column(
+              children: [
+                ListView.builder(
+                  shrinkWrap: true,
+                  itemCount: orders.length,
+                  itemBuilder: (context, index) {
+                    final order = orders[index];
+                    final List<Map<String, dynamic>> chocolates =
+                        List<Map<String, dynamic>>.from(order['chocolates']);
+                    return Column(
+                      children: [
+                        Text(
                       "${index + 1}. ${order['orderId']} : ${order['orderStatus']}"),
                   ListView.builder(
                       shrinkWrap: true,
