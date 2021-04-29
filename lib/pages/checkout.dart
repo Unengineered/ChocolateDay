@@ -2,11 +2,14 @@ import 'dart:convert';
 import 'dart:html';
 import 'dart:ui' as ui;
 
+import 'package:chocolate_day/constants/style_constants.dart';
 import 'package:chocolate_day/constants/url.dart';
 import 'package:chocolate_day/model/products/chocolate_product.dart';
 import 'package:chocolate_day/model/products/coupon_product.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 import 'package:hive/hive.dart';
 import 'package:http/http.dart' as http;
 
@@ -27,10 +30,13 @@ class _CheckoutState extends State<Checkout> {
   String htmlDoc = '';
   Map<String, dynamic> checkout = Map<String, dynamic>();
   final cart = Hive.box('cart');
+  FToast fToast;
 
   @override
   void initState() {
     print("Making checkout JSON");
+    fToast = FToast();
+    fToast.init(context);
     checkout['uid'] = FirebaseAuth.instance.currentUser.uid;
     checkout['email'] = FirebaseAuth.instance.currentUser.email;
     checkout['order'] = Map<String, dynamic>();
@@ -87,11 +93,65 @@ class _CheckoutState extends State<Checkout> {
           print(element);
           print('Event Received in callback: ${element.data}');
           if (element.data == 'MODAL_CLOSED') {
-            Navigator.pop(context);
-          } else if (element.data == 'SUCCESS_HELLO') {
+            Widget toast = Container(
+              padding: EdgeInsets.symmetric(horizontal: 24.0, vertical: 12.0),
+              decoration: BoxDecoration(
+                borderRadius: BorderRadius.circular(25.0),
+                color: Colors.redAccent,
+              ),
+              child: Row(
+                mainAxisSize: MainAxisSize.min,
+                children: [
+                  Icon(
+                    CupertinoIcons.xmark,
+                    color: Colors.black,
+                  ),
+                  SizedBox(
+                    width: 12.0,
+                  ),
+                  Text("Payment cancelled",
+                      style: kSubtitleStyle.copyWith(color: Colors.black)),
+                ],
+              ),
+            );
+
+            fToast.showToast(
+              child: toast,
+              gravity: ToastGravity.BOTTOM,
+              toastDuration: Duration(seconds: 2),
+            );
+            Navigator.of(context, rootNavigator: true).pushNamed('/');
+          } else if (element.data == 'SUCCESS_PAYMENT') {
             print('PAYMENT SUCCESSFUL!!!!!!!');
             cart.clear();
-            Navigator.of(context).pushNamed('/');
+            Widget toast = Container(
+              padding: EdgeInsets.symmetric(horizontal: 24.0, vertical: 12.0),
+              decoration: BoxDecoration(
+                borderRadius: BorderRadius.circular(25.0),
+                color: Colors.lightGreenAccent,
+              ),
+              child: Row(
+                mainAxisSize: MainAxisSize.min,
+                children: [
+                  Icon(
+                    CupertinoIcons.check_mark,
+                    color: Colors.black,
+                  ),
+                  SizedBox(
+                    width: 12.0,
+                  ),
+                  Text("Payment successful",
+                      style: kSubtitleStyle.copyWith(color: Colors.black)),
+                ],
+              ),
+            );
+
+            fToast.showToast(
+              child: toast,
+              gravity: ToastGravity.BOTTOM,
+              toastDuration: Duration(seconds: 2),
+            );
+            Navigator.of(context, rootNavigator: true).pushNamed('/');
           }
         });
 
@@ -133,7 +193,7 @@ class _CheckoutState extends State<Checkout> {
                        "description": "Chocolate Day Transaction",
                        "image": "https://example.com/your_logo",
                        "handler": function (response){
-                          window.parent.postMessage("SUCCESS_HELLO","*"); 
+                          window.parent.postMessage("SUCCESS_PAYMENT","*"); 
                        },
                        "modal": {
                          "ondismiss": function(){

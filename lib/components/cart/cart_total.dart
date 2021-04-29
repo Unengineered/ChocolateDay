@@ -181,7 +181,8 @@ class _BillState extends State<Bill> {
                   onPressed: () {
                     print("Sending to checkout page");
                     Navigator.of(context).push(MaterialPageRoute(
-                        builder: (context) => Checkout(donation: donation)));
+                        builder: (context) =>
+                            Checkout(donation: donation, key: UniqueKey())));
                   },
                   child: Container(
                       width: MediaQuery.of(context).size.width * 0.85,

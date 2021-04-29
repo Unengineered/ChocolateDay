@@ -1,6 +1,9 @@
+import 'dart:html' as html;
+
 import 'package:chocolate_day/constants/chocolate_type.dart';
 import 'package:chocolate_day/constants/class.dart';
 import 'package:chocolate_day/constants/india_state.dart';
+import 'package:chocolate_day/constants/style_constants.dart';
 import 'package:chocolate_day/model/products/coupon_product.dart';
 import 'package:chocolate_day/pages/account_page.dart';
 import 'package:chocolate_day/pages/cart.dart';
@@ -59,8 +62,17 @@ class MainScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    if (auth.currentUser != null) return HomePage();
+    final userAgent = html.window.navigator.userAgent.toString().toLowerCase();
+    // smartphone
+    if (!(userAgent.contains("iphone") || userAgent.contains("android")))
+      return Scaffold(
+          body: Center(
+              child: Text(
+        "This web page is only available on mobile",
+        style: kTitle2Style,
+      )));
 
+    if (auth.currentUser != null) return HomePage();
     return Scaffold(
       body: StreamBuilder(
           stream: auth.authStateChanges(),

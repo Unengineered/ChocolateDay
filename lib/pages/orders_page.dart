@@ -2,12 +2,14 @@ import 'package:chocolate_day/constants/style_constants.dart';
 import 'package:flutter/material.dart';
 
 class OrdersPage extends StatelessWidget {
-  final List<Map<String, dynamic>> orders;
+  List<Map<String, dynamic>> orders;
 
-  const OrdersPage({Key key, @required this.orders}) : super(key: key);
+  OrdersPage({Key key, @required this.orders}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
+    orders = orders.reversed.toList();
+
     return Scaffold(
       body: (orders.length == 0)
           ? Center(
@@ -28,17 +30,17 @@ class OrdersPage extends StatelessWidget {
                     return Column(
                       children: [
                         Text(
-                      "${index + 1}. ${order['orderId']} : ${order['orderStatus']}"),
-                  ListView.builder(
-                      shrinkWrap: true,
-                      itemCount: chocolates.length,
-                      itemBuilder: (context, index) {
-                        final chocolate = chocolates[index];
-                        return Text(
-                            "${chocolate['chocolateName']} to ${chocolate['receiverEmail']}");
-                      }),
-                  SizedBox(height: 20)
-                ],
+                            "${index + 1}. ${order['orderId']} : ${order['orderStatus']}"),
+                        ListView.builder(
+                            shrinkWrap: true,
+                            itemCount: chocolates.length,
+                            itemBuilder: (context, index) {
+                              final chocolate = chocolates[index];
+                              return Text(
+                                  "${chocolate['chocolateName']} to ${chocolate['receiverEmail']}");
+                            }),
+                        SizedBox(height: 20)
+                      ],
               );
             },
           )
