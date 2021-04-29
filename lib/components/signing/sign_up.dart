@@ -232,7 +232,8 @@ class _SignUpState extends State<SignUp> {
   void firebaseSignUp({@required String email, @required String password}) async {
     try {
       await FirebaseAuth.instance
-          .createUserWithEmailAndPassword(email: email, password: password)
+          .createUserWithEmailAndPassword(
+              email: email.trim(), password: password.trim())
           .then((credentials) {
         print("Sending document creation request");
         print(credentials.user.uid);

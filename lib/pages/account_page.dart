@@ -76,10 +76,17 @@ class AccountPage extends StatelessWidget {
                               if (coupon['phone_number'] != null)
                                 Text("Phone Number: ${coupon['phone_number']}"),
                               SizedBox(height: 20),
+                              buildOrdersButton(context, body['orders']),
+                            ],
+                          );
+                        } else {
+                          return Column(
+                            crossAxisAlignment: CrossAxisAlignment.center,
+                            children: [
+                              buildOrdersButton(context, body['orders']),
                             ],
                           );
                         }
-                        buildOrdersButton(context, body['orders']);
                       }
 
                       return Container();
@@ -130,10 +137,12 @@ class AccountPage extends StatelessWidget {
     List<Map<String, dynamic>> orders;
 
     if (orderList == null || orderList.length == 0) {
+      print("No orders");
       orders = [];
     } else
       orders = List<Map<String, dynamic>>.from(orderList);
 
+    print("Building orders button");
     return RawMaterialButton(
       materialTapTargetSize: MaterialTapTargetSize.shrinkWrap,
       highlightColor: Colors.transparent,
