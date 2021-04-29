@@ -21,7 +21,9 @@ import '../razorpay/UiFake.dart' if (dart.library.html) 'dart:ui' as ui;
 class Checkout extends StatefulWidget {
   final double donation;
 
-  const Checkout({Key key, this.donation = 0.0}) : super(key: key);
+  Checkout({Key key, this.donation = 0.0}) : super(key: key) {
+    print(key);
+  }
 
   @override
   _CheckoutState createState() => _CheckoutState();
@@ -165,7 +167,9 @@ class _CheckoutState extends State<Checkout> {
       });
     }
 
-    return (showRazorPay) ? HtmlElementView(viewType: 'rzp-html') : Container();
+    return (showRazorPay)
+        ? HtmlElementView(key: UniqueKey(), viewType: 'rzp-html')
+        : Container();
   }
 
   void activateRazorPay() async {

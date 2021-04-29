@@ -5,7 +5,6 @@ import '../../constants/style_constants.dart';
 
 class OrderCardList extends StatefulWidget {
   final List<Map<String, dynamic>> orders;
-
   const OrderCardList({Key key, this.orders}) : super(key: key);
 
   @override
@@ -21,7 +20,10 @@ class _OrderCardListState extends State<OrderCardList> {
         Padding(
           padding: EdgeInsets.only(bottom: 30),
           child: OrderCard(
-              orderId: order['orderId'], orderStatus: order['orderStatus']),
+              orderId: order['orderId'],
+              orderStatus: order['orderStatus'],
+              chocolates: List<Map<String, dynamic>>.from(order['chocolates']),
+              index: widget.orders.length - widget.orders.indexOf(order)),
         ),
       );
     }
@@ -39,11 +41,10 @@ class _OrderCardListState extends State<OrderCardList> {
 
   @override
   Widget build(BuildContext context) {
-    return Expanded(
-      child: ListView(
-        physics: BouncingScrollPhysics(),
-        children: orderListWidgets(),
-      ),
+    return ListView(
+      shrinkWrap: true,
+      physics: BouncingScrollPhysics(),
+      children: orderListWidgets(),
     );
   }
 }
