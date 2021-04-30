@@ -219,7 +219,6 @@ class _CheckoutState extends State<Checkout> {
              </script>
         </body>
         </html>
-    
     ''';
 
     setState(() {

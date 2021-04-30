@@ -1,4 +1,3 @@
-
 import 'package:chocolate_day/constants/style_constants.dart';
 import 'package:chocolate_day/pages/checkout.dart';
 import 'package:flutter/material.dart';
@@ -238,6 +237,9 @@ class _BillState extends State<Bill> {
                       )),
                 ),
 
+          // FlatButton(onPressed: () {
+          //   js.context.callMethod('open', ['https://stackoverflow.com/questions/ask']);
+          // }, child: Text("Button"))
         ],
       ),
     );

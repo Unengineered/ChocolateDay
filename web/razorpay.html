@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html>
+<meta name="viewport" content="width=device-width">
+<head><title>RazorPay Web Payment</title></head>
+<body>
+
+<script src="https://checkout.razorpay.com/v1/checkout.js"></script>
+<script>          
+
+                    var options = {
+                      "key": "rzp_test_y20tkZBsylJHtH",
+                       "amount": parseInt(getParameterByName('amount')),
+                       "currency": "INR",
+                       "order_id": getParameterByName('order_id'),
+                       "name": "Cultural Council VESIT",
+                       "description": "Chocolate Day Transaction",
+                       "image": "https://example.com/your_logo",
+                       "handler": function (response){
+                        window.opener.window.postMessage(`RAZORPAY_SUCCESS`);
+                          window.close()
+                       },
+                       "modal": {
+                         "ondismiss": function(){
+                           window.opener.window.postMessage(`RAZORPAY_DISMISSED`);
+                            window.close();  //3
+                         }
+                       }
+                    };
+
+                    function getParameterByName(name, url = window.location.href) {
+                        name = name.replace(/[\[\]]/g, '\\$&');
+                        var regex = new RegExp('[?&]' + name + '(=([^&#]*)|&|#|$)'),
+                           results = regex.exec(url);
+                        if (!results) return null;
+                        if (!results[2]) return '';
+                        return decodeURIComponent(results[2].replace(/\+/g, ' '));
+                     }
+
+                    var rzp1 = new Razorpay(options);
+                    window.onload = function(e){  //1
+                         window.opener.window.postMessage(`RAZORPAY_STARTED`);
+                         console.log("Starting razorpay")
+                         rzp1.open();
+                         e.preventDefault();
+                    }
+
+</script>
+</body>
+</html>

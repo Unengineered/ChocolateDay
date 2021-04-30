@@ -69,9 +69,31 @@ class AboutPage extends StatelessWidget {
                     style: kSubtitleStyle.copyWith(
                         height: 1.8, color: Colors.white)),
               ),
+              SizedBox(height: 10.0),
               Padding(
                 padding: EdgeInsets.symmetric(horizontal: 30.0),
-                child: Text("v1.0",
+                child: Text("+917972404080",
+                    style: kSubtitleStyle.copyWith(
+                        height: 1.8, color: Colors.white)),
+              ),
+              SizedBox(height: 10.0),
+              Padding(
+                padding: EdgeInsets.symmetric(horizontal: 30.0),
+                child: Text("+91 98695 76497",
+                    style: kSubtitleStyle.copyWith(
+                        height: 1.8, color: Colors.white)),
+              ),
+              SizedBox(height: 10.0),
+              Padding(
+                padding: EdgeInsets.symmetric(horizontal: 30.0),
+                child: Text(
+                    "Operational address: Vivekanand Education Society's Institute of technology, HAMC, Collector's Colony, Chembur East, Mumbai-400074.",
+                    style: kSubtitleStyle.copyWith(
+                        height: 1.8, color: Colors.white)),
+              ),
+              Padding(
+                padding: EdgeInsets.symmetric(horizontal: 30.0),
+                child: Text("v1.1",
                     style: kSubtitleStyle.copyWith(
                         height: 1.8, color: Colors.white)),
               ),
