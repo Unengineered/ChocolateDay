@@ -1,5 +1,5 @@
 import 'package:chocolate_day/constants/style_constants.dart';
-import 'package:chocolate_day/pages/checkout.dart';
+import 'package:chocolate_day/pages/iOSCheckout.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:hive/hive.dart';
@@ -180,10 +180,10 @@ class _BillState extends State<Bill> {
             splashColor: Colors.transparent,
             onPressed: () {
               print("Sending to checkout page");
-              Navigator.of(context).push(MaterialPageRoute(
-                  builder: (context) =>
-                      Checkout(donation: donation, key: UniqueKey())));
-            },
+                    Navigator.of(context).push(MaterialPageRoute(
+                        builder: (context) =>
+                            IosCheckout(donation: donation, key: UniqueKey())));
+                  },
             child: Container(
                 width: MediaQuery.of(context).size.width * 0.85,
                 decoration: BoxDecoration(
@@ -236,10 +236,6 @@ class _BillState extends State<Bill> {
                                 kSubtitleStyle.copyWith(color: Colors.white)),
                       )),
                 ),
-
-          // FlatButton(onPressed: () {
-          //   js.context.callMethod('open', ['https://stackoverflow.com/questions/ask']);
-          // }, child: Text("Button"))
         ],
       ),
     );

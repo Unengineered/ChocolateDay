@@ -2,10 +2,12 @@ import 'dart:convert';
 import 'dart:html';
 import 'dart:js' as js;
 
+import 'package:chocolate_day/constants/style_constants.dart';
 import 'package:chocolate_day/constants/url.dart';
 import 'package:chocolate_day/model/products/chocolate_product.dart';
 import 'package:chocolate_day/model/products/coupon_product.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:hive/hive.dart';
@@ -25,7 +27,7 @@ class _IosCheckoutState extends State<IosCheckout> {
   BroadcastChannel channel;
   final cart = Hive.box('cart');
   FToast fToast;
-  String text = 'INITIAL_ADDING_BROAD';
+  String status = 'INITIAL_ADDING_BROAD';
   Function eventHandler;
   Future<http.Response> orderRequest;
 
@@ -36,10 +38,69 @@ class _IosCheckoutState extends State<IosCheckout> {
       final windowEvent = event as MessageEvent;
       print(windowEvent.data);
       setState(() {
-        text = windowEvent.data;
+        status = windowEvent.data;
       });
 
-      if (windowEvent.data == "RAZORPAY_DISMISSED") Navigator.of(context).pop();
+      if (windowEvent.data == "RAZORPAY_DISMISSED") {
+        Widget toast = Container(
+          padding: EdgeInsets.symmetric(horizontal: 24.0, vertical: 12.0),
+          decoration: BoxDecoration(
+            borderRadius: BorderRadius.circular(25.0),
+            color: Colors.redAccent,
+          ),
+          child: Row(
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              Icon(
+                CupertinoIcons.xmark,
+                color: Colors.black,
+              ),
+              SizedBox(
+                width: 12.0,
+              ),
+              Text("Payment cancelled",
+                  style: kSubtitleStyle.copyWith(color: Colors.black)),
+            ],
+          ),
+        );
+
+        fToast.showToast(
+          child: toast,
+          gravity: ToastGravity.BOTTOM,
+          toastDuration: Duration(seconds: 2),
+        );
+        Navigator.of(context, rootNavigator: true).pop();
+      } else if (windowEvent.data == "RAZORPAY_SUCCESS") {
+        cart.clear();
+        Widget toast = Container(
+          padding: EdgeInsets.symmetric(horizontal: 24.0, vertical: 12.0),
+          decoration: BoxDecoration(
+            borderRadius: BorderRadius.circular(25.0),
+            color: Colors.lightGreenAccent,
+          ),
+          child: Row(
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              Icon(
+                CupertinoIcons.check_mark,
+                color: Colors.black,
+              ),
+              SizedBox(
+                width: 12.0,
+              ),
+              Text("Payment successful",
+                  style: kSubtitleStyle.copyWith(color: Colors.black)),
+            ],
+          ),
+        );
+
+        fToast.showToast(
+          child: toast,
+          gravity: ToastGravity.BOTTOM,
+          toastDuration: Duration(seconds: 2),
+        );
+        Navigator.of(context, rootNavigator: true).pop();
+      }
     };
     print("Making checkout JSON");
     fToast = FToast();
@@ -94,47 +155,71 @@ class _IosCheckoutState extends State<IosCheckout> {
   Widget build(BuildContext context) {
     return Scaffold(
         body: Container(
-      child: Column(
-        children: [
-          Text(text),
-          FutureBuilder(
-              future: orderRequest,
-              builder: (context, response) {
-                if (response.hasData) {
-                  final body = jsonDecode(response.data.body);
-                  print(body.toString());
-                  return TextButton(
-                      onPressed: () {
-                        js.context.callMethod('open', [
-                          '/razorpay.html?amount=${body['amount']}&order_id=${body['id']}'
-                        ]);
-                      },
-                      child: Text("Buy now ${body['id']}"));
-                }
-                return Container(
-                  child: Text("loading order"),
-                );
-              })
-        ],
+      child: Center(
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          crossAxisAlignment: CrossAxisAlignment.center,
+          children: [
+            FutureBuilder(
+                future: orderRequest,
+                builder: (context, response) {
+                  if (response.hasData) {
+                    final body = jsonDecode(response.data.body);
+                    print(body.toString());
+
+                    return Column(
+                      children: [
+                        Text("Total: Rs.${body['amount'] / 100}"),
+                        Text("Order id: ${body['id']}"),
+                        SizedBox(height: 10.0),
+                        RawMaterialButton(
+                          materialTapTargetSize:
+                              MaterialTapTargetSize.shrinkWrap,
+                          highlightColor: Colors.transparent,
+                          splashColor: Colors.transparent,
+                          onPressed: () {
+                            js.context.callMethod('open', [
+                              '/razorpay.html?amount=${body['amount']}&order_id=${body['id']}'
+                            ]);
+                          },
+                          child: Container(
+                              width: MediaQuery.of(context).size.width * 0.85,
+                              decoration: BoxDecoration(
+                                  gradient: LinearGradient(
+                                    begin: Alignment.topLeft,
+                                    end: Alignment.bottomRight,
+                                    colors: [
+                                      Color(0xFF00AEFF),
+                                      Color(0xFF0076FF),
+                                    ],
+                                  ),
+                                  boxShadow: [
+                                    BoxShadow(
+                                        color: kShadowColor, blurRadius: 16.0)
+                                  ],
+                                  borderRadius: BorderRadius.circular(10)),
+                              padding: EdgeInsets.symmetric(
+                                  horizontal: 35, vertical: 15),
+                              child: Center(
+                                child: Text("Pay",
+                                    style: kSubtitleStyle.copyWith(
+                                        color: Colors.white)),
+                              )),
+                        ),
+                      ],
+                    );
+                  }
+                  if (response.hasError)
+                    return Container(child: Text("Error loading order"));
+                  return Container(
+                    child: Text("Loading order"),
+                  );
+                })
+          ],
+        ),
       ),
     ));
   }
-
-  // void activateRazorPay() async {
-  //   print(jsonEncode(checkout));
-  //   print("Getting order id from chocolate factory");
-  //   final response = await http.post(Uri.parse('$kRazorPayUrl'),
-  //       body: jsonEncode(checkout),
-  //       headers: <String, String>{
-  //         'Content-Type': 'application/json; charset=UTF-8',
-  //       });
-  //   final body = jsonDecode(response.body);
-  //   print(body.toString());
-  //   setState(() {
-  //     text = 'GOT ORDER FROM SERVER ${body['amount']} : ${body['id']}';
-  //   });
-  //   js.context.callMethod('open', ['/razorpay.html?amount=${body['amount']}&order_id=${body['id']}']);
-  // }
 
   @override
   void dispose() {
