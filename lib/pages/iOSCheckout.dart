@@ -179,7 +179,7 @@ class _IosCheckoutState extends State<IosCheckout> {
                           splashColor: Colors.transparent,
                           onPressed: () {
                             js.context.callMethod('open', [
-                              '/razorpay.html?amount=${body['amount']}&order_id=${body['id']}'
+                              '/checkout.html?amount=${body['amount']}&order_id=${body['id']}'
                             ]);
                           },
                           child: Container(
