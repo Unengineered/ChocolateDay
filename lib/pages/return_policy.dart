@@ -18,7 +18,7 @@ class RefundPage extends StatelessWidget {
           backgroundColor: Colors.black,
           centerTitle: true,
           title: Text(
-            'About',
+            'Return Policy',
             style: TextStyle(fontSize: 20),
           )),
       body: Container(

@@ -3,6 +3,7 @@ import 'package:chocolate_day/components/signing/sign_in.dart';
 import 'package:chocolate_day/components/signing/sign_up.dart';
 import 'package:chocolate_day/pages/forgot_password_page.dart';
 import 'package:chocolate_day/pages/return_policy.dart';
+import 'package:chocolate_day/pages/shipping_policy.dart';
 import 'package:flutter/material.dart';
 
 import 'privacy_and_policy.dart';
@@ -90,6 +91,14 @@ class _SigningPageState extends State<SigningPage> {
                         },
                         child: Text("Refund & Cancellation"),
                       ),
+                      SizedBox(width: 10),
+                      TextButton(
+                        onPressed: () {
+                          Navigator.of(context).push(MaterialPageRoute(
+                              builder: (context) => ShippingPolicy()));
+                        },
+                        child: Text("Shipping policy"),
+                      )
                     ],
                   )
                 ],

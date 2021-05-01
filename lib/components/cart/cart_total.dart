@@ -1,5 +1,5 @@
 import 'package:chocolate_day/constants/style_constants.dart';
-import 'package:chocolate_day/pages/iOSCheckout.dart';
+import 'package:chocolate_day/pages/razorpay_checkout.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:hive/hive.dart';
@@ -181,8 +181,8 @@ class _BillState extends State<Bill> {
             onPressed: () {
               print("Sending to checkout page");
                     Navigator.of(context).push(MaterialPageRoute(
-                        builder: (context) =>
-                            IosCheckout(donation: donation, key: UniqueKey())));
+                        builder: (context) => RazorpayCheckout(
+                            donation: donation, key: UniqueKey())));
                   },
             child: Container(
                 width: MediaQuery.of(context).size.width * 0.85,

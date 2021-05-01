@@ -13,16 +13,16 @@ import 'package:fluttertoast/fluttertoast.dart';
 import 'package:hive/hive.dart';
 import 'package:http/http.dart' as http;
 
-class IosCheckout extends StatefulWidget {
+class RazorpayCheckout extends StatefulWidget {
   final double donation;
 
-  const IosCheckout({Key key, this.donation = 0.0}) : super(key: key);
+  const RazorpayCheckout({Key key, this.donation = 0.0}) : super(key: key);
 
   @override
-  _IosCheckoutState createState() => _IosCheckoutState();
+  _RazorpayCheckoutState createState() => _RazorpayCheckoutState();
 }
 
-class _IosCheckoutState extends State<IosCheckout> {
+class _RazorpayCheckoutState extends State<RazorpayCheckout> {
   Map<String, dynamic> checkout = Map<String, dynamic>();
   BroadcastChannel channel;
   final cart = Hive.box('cart');
