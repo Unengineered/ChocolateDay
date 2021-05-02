@@ -220,7 +220,7 @@ class _PayUCheckoutState extends State<PayUCheckout> {
                           onPressed: () {
                             if (_formKey.currentState.validate()) {
                               js.context.callMethod('open', [
-                                '/payucheckout.html?amount=${body['amount']}&txnid=${body['txnid']}&email=${FirebaseAuth.instance.currentUser.email}&phone${phoneController.text}=&hash=${body['hash']}&name=${getNameFromEmail(FirebaseAuth.instance.currentUser.email)}'
+                                '/checkoutpayu.html?amount=${body['amount']}&txnid=${body['txnid']}&email=${FirebaseAuth.instance.currentUser.email}&phone${phoneController.text}=&hash=${body['hash']}&name=${getNameFromEmail(FirebaseAuth.instance.currentUser.email)}'
                               ]);
                             }
                           },
