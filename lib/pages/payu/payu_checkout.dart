@@ -9,30 +9,35 @@ import 'package:chocolate_day/model/products/coupon_product.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:hive/hive.dart';
 import 'package:http/http.dart' as http;
 
-class RazorpayCheckout extends StatefulWidget {
+class PayUCheckout extends StatefulWidget {
   final double donation;
 
-  const RazorpayCheckout({Key key, this.donation = 0.0}) : super(key: key);
+  const PayUCheckout({Key key, this.donation = 0.0}) : super(key: key);
 
   @override
-  _RazorpayCheckoutState createState() => _RazorpayCheckoutState();
+  _PayUCheckoutState createState() => _PayUCheckoutState();
 }
 
-class _RazorpayCheckoutState extends State<RazorpayCheckout> {
+class _PayUCheckoutState extends State<PayUCheckout> {
   Map<String, dynamic> checkout = Map<String, dynamic>();
   final cart = Hive.box('cart');
   FToast fToast;
   String status = 'Getting order from server';
   Function eventHandler;
   Future<http.Response> orderRequest;
+  final phoneController = TextEditingController();
+  final _formKey = GlobalKey<FormState>();
 
   @override
   void initState() {
     super.initState();
+    print("Making checkout JSON");
+
     eventHandler = (event) {
       final windowEvent = event as MessageEvent;
       print(windowEvent.data);
@@ -40,7 +45,7 @@ class _RazorpayCheckoutState extends State<RazorpayCheckout> {
         status = windowEvent.data;
       });
 
-      if (windowEvent.data == "RAZORPAY_DISMISSED") {
+      if (windowEvent.data == "PAYU_DISMISSED") {
         Widget toast = Container(
           padding: EdgeInsets.symmetric(horizontal: 24.0, vertical: 12.0),
           decoration: BoxDecoration(
@@ -69,7 +74,7 @@ class _RazorpayCheckoutState extends State<RazorpayCheckout> {
           toastDuration: Duration(seconds: 2),
         );
         Navigator.of(context, rootNavigator: true).pop();
-      } else if (windowEvent.data == "RAZORPAY_SUCCESS") {
+      } else if (windowEvent.data == "PAYU_SUCCESS") {
         cart.clear();
         Widget toast = Container(
           padding: EdgeInsets.symmetric(horizontal: 24.0, vertical: 12.0),
@@ -101,7 +106,7 @@ class _RazorpayCheckoutState extends State<RazorpayCheckout> {
         Navigator.of(context, rootNavigator: true).pop();
       }
     };
-    print("Making checkout JSON");
+
     fToast = FToast();
     fToast.init(context);
     checkout['uid'] = FirebaseAuth.instance.currentUser.uid;
@@ -142,44 +147,82 @@ class _RazorpayCheckoutState extends State<RazorpayCheckout> {
         };
       }
     }
-    orderRequest = http.post(Uri.parse('$kRazorPayUrl'),
+
+    checkout['name'] =
+        getNameFromEmail(FirebaseAuth.instance.currentUser.email);
+
+    print(jsonEncode(checkout));
+    orderRequest = http.post(Uri.parse('$kPayUUrl'),
         body: jsonEncode(checkout),
         headers: <String, String>{
           'Content-Type': 'application/json; charset=UTF-8',
         });
-    window.addEventListener("message", eventHandler);
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        body: Container(
-      child: Center(
+      body: Container(
         child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          crossAxisAlignment: CrossAxisAlignment.center,
           children: [
             FutureBuilder(
                 future: orderRequest,
                 builder: (context, response) {
+                  if (response.hasError) {
+                    return Text("${response.error}");
+                  }
+
                   if (response.hasData) {
                     final body = jsonDecode(response.data.body);
                     print(body.toString());
 
                     return Column(
                       children: [
-                        Text("Total: Rs.${body['amount'] / 100}"),
-                        Text("Order id: ${body['id']}"),
-                        SizedBox(height: 10.0),
+                        Text("Total: Rs.${body['amount']}"),
+                        Text("Order id: ${body['txnid']}"),
+
+                        SizedBox(height: 20.0),
+
+                        //Phone number
+                        Form(
+                          key: _formKey,
+                          child: TextFormField(
+                            autovalidateMode:
+                                AutovalidateMode.onUserInteraction,
+                            validator: (value) {
+                              if (value == null || value == '')
+                                return 'Please enter your phone number';
+
+                              RegExp regex = RegExp(r"^(?:[+0]9)?[0-9]{10}$");
+                              if (!regex.hasMatch(value))
+                                return 'Enter a valid phone number';
+
+                              return null;
+                            },
+                            inputFormatters: [
+                              FilteringTextInputFormatter.digitsOnly
+                            ],
+                            keyboardType: TextInputType.phone,
+                            decoration: kFormInputDecoration.copyWith(
+                              prefix: Text("+91 "),
+                              hintText: "Phone no.",
+                            ),
+                            controller: phoneController,
+                          ),
+                        ),
+                        SizedBox(height: 22),
+
                         RawMaterialButton(
                           materialTapTargetSize:
                               MaterialTapTargetSize.shrinkWrap,
                           highlightColor: Colors.transparent,
                           splashColor: Colors.transparent,
                           onPressed: () {
-                            js.context.callMethod('open', [
-                              '/checkout.html?amount=${body['amount']}&order_id=${body['id']}'
-                            ]);
+                            if (_formKey.currentState.validate()) {
+                              js.context.callMethod('open', [
+                                '/payucheckout.html?amount=${body['amount']}&txnid=${body['txnid']}&email=${FirebaseAuth.instance.currentUser.email}&phone${phoneController.text}=&hash=${body['hash']}&name=${getNameFromEmail(FirebaseAuth.instance.currentUser.email)}'
+                              ]);
+                            }
                           },
                           child: Container(
                               width: MediaQuery.of(context).size.width * 0.85,
@@ -208,22 +251,24 @@ class _RazorpayCheckoutState extends State<RazorpayCheckout> {
                       ],
                     );
                   }
-                  if (response.hasError)
-                    return Container(child: Text("Error loading order"));
-                  return Container(
-                    child: Text("Loading order"),
-                  );
+
+                  return Container();
                 })
           ],
         ),
       ),
-    ));
+    );
   }
 
-  @override
-  void dispose() {
-    print('removing event listeners');
-    window.removeEventListener("message", eventHandler);
-    super.dispose();
+  String getNameFromEmail(String email) {
+    String sub = email.substring(0, 5);
+
+    if (sub.contains(RegExp(r'[0-9]'))) {
+      email = email.substring(3);
+    }
+
+    RegExp reg1 = new RegExp(r'[a-z]\w+');
+    Iterable matches = reg1.allMatches(email);
+    return (email.substring(matches.first.start, matches.first.end));
   }
 }
