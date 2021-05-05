@@ -1,5 +1,4 @@
 import 'package:chocolate_day/constants/style_constants.dart';
-import 'package:chocolate_day/pages/payu/payu_checkout.dart';
 import 'package:chocolate_day/pages/razorpay_checkout.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -104,6 +103,11 @@ class _BillState extends State<Bill> {
           ),
           SizedBox(height: 20),
 
+          Text(
+              "The world needs more kind people like you to extend their generosity and support the sick and old with Khushiyan organization and SMIT old age home and care centre. A little penny for you, is a whole lot of hope for them.",
+              style: kSubtitleStyle.copyWith(fontSize: 10)),
+
+          SizedBox(height: 20),
           TextField(
             onChanged: (value) {
               print("Value on donation $value");
@@ -134,23 +138,32 @@ class _BillState extends State<Bill> {
           SizedBox(height: 10),
 
           Row(
-            mainAxisAlignment: MainAxisAlignment.start,
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
-              QuickDonationButton(
-                amount: 10,
-                controller: donationController,
-                updateDonation: updateDonation,
+              Row(
+                mainAxisAlignment: MainAxisAlignment.start,
+                children: [
+                  QuickDonationButton(
+                    amount: 10,
+                    controller: donationController,
+                    updateDonation: updateDonation,
+                  ),
+                  SizedBox(width: 5),
+                  QuickDonationButton(
+                      amount: 20,
+                      controller: donationController,
+                      updateDonation: updateDonation),
+                  SizedBox(width: 5),
+                  QuickDonationButton(
+                      amount: 30,
+                      controller: donationController,
+                      updateDonation: updateDonation),
+                ],
               ),
-              SizedBox(width: 5),
-              QuickDonationButton(
-                  amount: 20,
-                  controller: donationController,
-                  updateDonation: updateDonation),
-              SizedBox(width: 5),
-              QuickDonationButton(
-                  amount: 30,
-                  controller: donationController,
-                  updateDonation: updateDonation),
+              Container(
+                  height: 50,
+                  width: 50,
+                  child: Image.asset('asset/illustrations/sort.png')),
             ],
           ),
           SizedBox(height: 20),
@@ -205,41 +218,7 @@ class _BillState extends State<Bill> {
                           padding: EdgeInsets.symmetric(
                               horizontal: 35, vertical: 15),
                           child: Center(
-                            child: Text("Razorpay Checkout",
-                                style: kSubtitleStyle.copyWith(
-                                    color: Colors.white)),
-                          )),
-                    ),
-                    SizedBox(height: 20),
-                    RawMaterialButton(
-                      materialTapTargetSize: MaterialTapTargetSize.shrinkWrap,
-                      highlightColor: Colors.transparent,
-                      splashColor: Colors.transparent,
-                      onPressed: () {
-                        print("Sending to checkout page");
-                        Navigator.of(context).push(MaterialPageRoute(
-                            builder: (context) => PayUCheckout(
-                                donation: donation, key: UniqueKey())));
-                      },
-                      child: Container(
-                          width: MediaQuery.of(context).size.width * 0.85,
-                          decoration: BoxDecoration(
-                              gradient: LinearGradient(
-                                begin: Alignment.topLeft,
-                                end: Alignment.bottomRight,
-                                colors: [
-                                  Color(0xFF00AEFF),
-                                  Color(0xFF0076FF),
-                                ],
-                              ),
-                              boxShadow: [
-                                BoxShadow(color: kShadowColor, blurRadius: 16.0)
-                              ],
-                              borderRadius: BorderRadius.circular(10)),
-                          padding: EdgeInsets.symmetric(
-                              horizontal: 35, vertical: 15),
-                          child: Center(
-                            child: Text("PayU Checkout",
+                            child: Text("Checkout",
                                 style: kSubtitleStyle.copyWith(
                                     color: Colors.white)),
                           )),

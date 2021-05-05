@@ -33,6 +33,7 @@ class _HeroChocolatePageState extends State<HeroChocolatePage> {
   Class selectedClass = Class.Division;
   String selectedEmail = '';
   bool isAnonymous = false;
+  bool countPrice = true;
   final messageController = TextEditingController();
   final senderNameController = TextEditingController();
   String error = '';
@@ -108,6 +109,7 @@ class _HeroChocolatePageState extends State<HeroChocolatePage> {
                     child: Column(
                       children: [
                         Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: [
                             Text('Stay Anonymous',
                                 style: kSubtitleStyle.copyWith(
@@ -257,6 +259,31 @@ class _HeroChocolatePageState extends State<HeroChocolatePage> {
                 //Space
                 SizedBox(height: 20),
 
+                Padding(
+                  padding: EdgeInsets.symmetric(horizontal: 28.0),
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      Text('Donate amount',
+                          style: kSubtitleStyle.copyWith(color: Colors.black)),
+                      Container(
+                        height: 30,
+                        width: 30,
+                        child: CheckboxListTile(
+                            value: countPrice,
+                            onChanged: (value) {
+                              setState(() {
+                                countPrice = value;
+                              });
+                            }),
+                      )
+                    ],
+                  ),
+                ),
+
+                //Space
+                SizedBox(height: 20),
+
                 //Add to cart button
                 RawMaterialButton(
                   materialTapTargetSize: MaterialTapTargetSize.shrinkWrap,
@@ -277,7 +304,8 @@ class _HeroChocolatePageState extends State<HeroChocolatePage> {
                                 : senderNameController.text,
                             toName: selectedEmail,
                             message: messageController.text,
-                            cost: widget.chocolate.price));
+                            cost: widget.chocolate.price,
+                            countPrice: countPrice));
 
                         print("Showing toast");
                         Widget toast = Container(
@@ -341,6 +369,9 @@ class _HeroChocolatePageState extends State<HeroChocolatePage> {
                                 kSubtitleStyle.copyWith(color: Colors.white)),
                       )),
                 ),
+
+                //Space
+                SizedBox(height: 20),
               ],
             ),
           ),

@@ -3,7 +3,7 @@ import 'package:chocolate_day/components/cart/cart_total.dart';
 import 'package:chocolate_day/constants/style_constants.dart';
 import 'package:chocolate_day/model/products/chocolate_product.dart';
 import 'package:chocolate_day/model/products/coupon_product.dart';
-import 'package:chocolate_day/model/products/poduct.dart';
+import 'package:chocolate_day/model/products/product.dart';
 import 'package:flutter/material.dart';
 import 'package:hive/hive.dart';
 import 'package:hive_flutter/hive_flutter.dart';
@@ -59,7 +59,7 @@ class _CartItemListState extends State<CartItemList> {
             products.add(product);
 
             if (product is ChocolateProduct) {
-              cartValue += product.cost;
+              if (product.countPrice) cartValue += product.cost;
             }
 
             if (product is CouponProduct) {

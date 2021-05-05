@@ -2,7 +2,7 @@ import 'dart:core';
 
 import 'package:chocolate_day/constants/chocolate_type.dart';
 import 'package:chocolate_day/constants/class.dart';
-import 'package:chocolate_day/model/products/poduct.dart';
+import 'package:chocolate_day/model/products/product.dart';
 import 'package:hive/hive.dart';
 import 'package:meta/meta.dart';
 
@@ -26,7 +26,10 @@ class ChocolateProduct implements Product {
   final String message;
 
   @HiveField(5)
-  final int cost;
+  final double cost;
+
+  @HiveField(6)
+  final bool countPrice;
 
   ChocolateProduct({
     @required this.chocolateType,
@@ -35,5 +38,6 @@ class ChocolateProduct implements Product {
     this.senderName,
     @required this.message,
     @required this.cost,
+    @required this.countPrice,
   });
 }

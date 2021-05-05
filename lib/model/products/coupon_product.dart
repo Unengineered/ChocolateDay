@@ -1,6 +1,6 @@
 import 'package:chocolate_day/constants/class.dart';
 import 'package:chocolate_day/constants/india_state.dart';
-import 'package:chocolate_day/model/products/poduct.dart';
+import 'package:chocolate_day/model/products/product.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:hive/hive.dart';
 

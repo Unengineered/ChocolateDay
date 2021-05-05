@@ -100,7 +100,8 @@ class _SigningPageState extends State<SigningPage> {
                         child: Text("Shipping policy"),
                       )
                     ],
-                  )
+                  ),
+                  SizedBox(height: 20),
                 ],
               ),
             ),

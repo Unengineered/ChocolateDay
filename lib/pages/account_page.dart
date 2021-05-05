@@ -2,7 +2,12 @@ import 'dart:convert';
 
 import 'package:chocolate_day/constants/style_constants.dart';
 import 'package:chocolate_day/constants/url.dart';
+import 'package:chocolate_day/pages/about_page.dart';
 import 'package:chocolate_day/pages/orders_page.dart';
+import 'package:chocolate_day/pages/privacy_and_policy.dart';
+import 'package:chocolate_day/pages/return_policy.dart';
+import 'package:chocolate_day/pages/shipping_policy.dart';
+import 'package:chocolate_day/pages/terms_and_conditions.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:hive/hive.dart';
@@ -21,110 +26,197 @@ class AccountPage extends StatelessWidget {
           height: MediaQuery.of(context).size.height,
           width: MediaQuery.of(context).size.width,
           child: Column(
-            mainAxisAlignment: MainAxisAlignment.end,
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
               Padding(
-                padding: EdgeInsets.symmetric(horizontal: 28.0),
-                child: FutureBuilder(
-                    future: accountInfo,
-                    builder: (context, response) {
-                      if (response.connectionState == ConnectionState.waiting) {
-                        return CircularProgressIndicator(
-                            valueColor:
-                                AlwaysStoppedAnimation<Color>(Colors.black));
-                      }
-
-                      if (response.hasError) {
-                        return Text('Error loading account data');
-                      }
-
-                      if (response.hasData) {
-                        final body = jsonDecode(response.data.body);
-                        final coupon = body['coupon'];
-                        print(body.toString());
-
-                        if (coupon != null) {
-                          return Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
-                              Text("Your info", style: kTitle1Style),
-                              SizedBox(height: 20),
-                              Text(
-                                  "Email: ${FirebaseAuth.instance.currentUser.email}"),
-                              SizedBox(height: 20),
-                              if (coupon['name'] != null)
-                                Text("Name: ${coupon['name']}"),
-                              SizedBox(height: 20),
-                              if (coupon['class'] != null)
-                                Text("Class: ${coupon['class']}"),
-                              SizedBox(height: 20),
-                              if (coupon['roll_no'] != null)
-                                Text("Roll no: ${coupon['roll_no']}"),
-                              SizedBox(height: 20),
-                              if (coupon['address'] != null)
-                                Text("Address: ${coupon['address']}"),
-                              SizedBox(height: 20),
-                              if (coupon['city'] != null)
-                                Text("City: ${coupon['city']}"),
-                              SizedBox(height: 20),
-                              if (coupon['postcode'] != null)
-                                Text("Pincode: ${coupon['postcode']}"),
-                              SizedBox(height: 20),
-                              if (coupon['state'] != null)
-                                Text("State: ${coupon['state']}"),
-                              SizedBox(height: 20),
-                              if (coupon['phone_number'] != null)
-                                Text("Phone Number: ${coupon['phone_number']}"),
-                              SizedBox(height: 20),
-                              buildOrdersButton(context, body['orders']),
-                            ],
-                          );
-                        } else {
-                          return Column(
-                            crossAxisAlignment: CrossAxisAlignment.center,
-                            children: [
-                              buildOrdersButton(context, body['orders']),
-                            ],
-                          );
-                        }
-                      }
-
-                      return Container();
-                    }),
-              ),
-              SizedBox(height: 20),
-              RawMaterialButton(
-                materialTapTargetSize: MaterialTapTargetSize.shrinkWrap,
-                highlightColor: Colors.transparent,
-                splashColor: Colors.transparent,
-                onPressed: () {
-                  Hive.box('cart').clear();
-                  FirebaseAuth.instance.signOut();
-                  Navigator.of(context).pop();
-                },
-                child: Container(
-                    height: 50,
-                    width: MediaQuery.of(context).size.width * 0.85,
-                    decoration: BoxDecoration(
-                        gradient: LinearGradient(
-                          begin: Alignment.topLeft,
-                          end: Alignment.bottomRight,
-                          colors: [
-                            Color(0xFFFF2600),
-                            Color(0xFFFF0000),
-                          ],
+                padding: EdgeInsets.only(top: 28.0, left: 40),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  children: [
+                    GestureDetector(
+                      onTap: () {
+                        Navigator.pop(context);
+                      },
+                      child: Container(
+                        width: 36,
+                        height: 36,
+                        decoration: BoxDecoration(
+                          borderRadius: BorderRadius.circular(12),
+                          color: kPrimaryLabelColor.withOpacity(0.8),
                         ),
-                        boxShadow: [
-                          BoxShadow(color: kShadowColor, blurRadius: 16.0)
-                        ],
-                        borderRadius: BorderRadius.circular(10)),
-                    padding: EdgeInsets.symmetric(horizontal: 35, vertical: 15),
-                    child: Center(
-                      child: Text("Log Out",
-                          style: kSubtitleStyle.copyWith(color: Colors.white)),
-                    )),
+                        child: Icon(Icons.close, color: Colors.white),
+                      ),
+                    ),
+                    SizedBox(width: 15),
+                    Expanded(
+                      child: Text("Account", style: kLargeTitleStyle),
+                    )
+                  ],
+                ),
               ),
-              SizedBox(height: 20),
+              Column(
+                mainAxisAlignment: MainAxisAlignment.end,
+                children: [
+                  Padding(
+                    padding: EdgeInsets.symmetric(horizontal: 28.0),
+                    child: FutureBuilder(
+                        future: accountInfo,
+                        builder: (context, response) {
+                          if (response.connectionState ==
+                              ConnectionState.waiting) {
+                            return CircularProgressIndicator(
+                                valueColor: AlwaysStoppedAnimation<Color>(
+                                    Colors.black));
+                          }
+
+                          if (response.hasError) {
+                            return Text('Error loading account data');
+                          }
+
+                          if (response.hasData) {
+                            final body = jsonDecode(response.data.body);
+                            final coupon = body['coupon'];
+                            print(body.toString());
+
+                            if (coupon != null) {
+                              return Column(
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: [
+                                  Text("Your info", style: kTitle1Style),
+                                  SizedBox(height: 20),
+                                  Text(
+                                      "Email: ${FirebaseAuth.instance.currentUser.email}"),
+                                  SizedBox(height: 20),
+                                  if (coupon['name'] != null)
+                                    Text("Name: ${coupon['name']}"),
+                                  SizedBox(height: 20),
+                                  if (coupon['class'] != null)
+                                    Text("Class: ${coupon['class']}"),
+                                  SizedBox(height: 20),
+                                  if (coupon['roll_no'] != null)
+                                    Text("Roll no: ${coupon['roll_no']}"),
+                                  SizedBox(height: 20),
+                                  if (coupon['address'] != null)
+                                    Text("Address: ${coupon['address']}"),
+                                  SizedBox(height: 20),
+                                  if (coupon['city'] != null)
+                                    Text("City: ${coupon['city']}"),
+                                  SizedBox(height: 20),
+                                  if (coupon['postcode'] != null)
+                                    Text("Pincode: ${coupon['postcode']}"),
+                                  SizedBox(height: 20),
+                                  if (coupon['state'] != null)
+                                    Text("State: ${coupon['state']}"),
+                                  SizedBox(height: 20),
+                                  if (coupon['phone_number'] != null)
+                                    Text(
+                                        "Phone Number: ${coupon['phone_number']}"),
+                                  SizedBox(height: 20),
+                                  buildOrdersButton(context, body['orders']),
+                                ],
+                              );
+                            } else {
+                              return Column(
+                                crossAxisAlignment: CrossAxisAlignment.center,
+                                children: [
+                                  buildOrdersButton(context, body['orders']),
+                                ],
+                              );
+                            }
+                          }
+                          return Container();
+                        }),
+                  ),
+                  SizedBox(height: 20),
+                  RawMaterialButton(
+                    materialTapTargetSize: MaterialTapTargetSize.shrinkWrap,
+                    highlightColor: Colors.transparent,
+                    splashColor: Colors.transparent,
+                    onPressed: () {
+                      Hive.box('cart').clear();
+                      FirebaseAuth.instance.signOut();
+                      Navigator.of(context).pop();
+                    },
+                    child: Container(
+                        height: 50,
+                        width: MediaQuery.of(context).size.width * 0.85,
+                        decoration: BoxDecoration(
+                            gradient: LinearGradient(
+                              begin: Alignment.topLeft,
+                              end: Alignment.bottomRight,
+                              colors: [
+                                Color(0xFFFF2600),
+                                Color(0xFFFF0000),
+                              ],
+                            ),
+                            boxShadow: [
+                              BoxShadow(color: kShadowColor, blurRadius: 16.0)
+                            ],
+                            borderRadius: BorderRadius.circular(10)),
+                        padding:
+                            EdgeInsets.symmetric(horizontal: 35, vertical: 15),
+                        child: Center(
+                          child: Text("Log Out",
+                              style:
+                                  kSubtitleStyle.copyWith(color: Colors.white)),
+                        )),
+                  ),
+                  SizedBox(height: 20),
+                  SizedBox(height: 10),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    crossAxisAlignment: CrossAxisAlignment.center,
+                    children: [
+                      TextButton(
+                          onPressed: () {
+                            Navigator.of(context).push(MaterialPageRoute(
+                                builder: (context) => PrivacyPolicyPage()));
+                          },
+                          child: Text("Privacy Policy")),
+                      SizedBox(width: 10),
+                      TextButton(
+                        onPressed: () {
+                          Navigator.of(context).push(MaterialPageRoute(
+                              builder: (context) => TermsAndConditionsPage()));
+                        },
+                        child: Text("Terms & Conditions"),
+                      ),
+                      SizedBox(width: 10),
+                      TextButton(
+                        onPressed: () {
+                          Navigator.of(context).push(MaterialPageRoute(
+                              builder: (context) => AboutPage()));
+                        },
+                        child: Text("About us"),
+                      )
+                    ],
+                  ),
+                  SizedBox(height: 10),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    crossAxisAlignment: CrossAxisAlignment.center,
+                    children: [
+                      TextButton(
+                        onPressed: () {
+                          Navigator.of(context).push(MaterialPageRoute(
+                              builder: (context) => RefundPage()));
+                        },
+                        child: Text("Refund & Cancellation"),
+                      ),
+                      SizedBox(width: 10),
+                      TextButton(
+                        onPressed: () {
+                          Navigator.of(context).push(MaterialPageRoute(
+                              builder: (context) => ShippingPolicy()));
+                        },
+                        child: Text("Shipping policy"),
+                      )
+                    ],
+                  ),
+                  SizedBox(height: 20),
+                ],
+              ),
             ],
           ),
         ),
