@@ -8,13 +8,12 @@
 <script>          
 
                     var options = {
-                      "key": "rzp_test_y20tkZBsylJHtH",
+                      "key": "rzp_live_rfnhrt5HhbVYn0",
                        "amount": parseInt(getParameterByName('amount')),
                        "currency": "INR",
                        "order_id": getParameterByName('order_id'),
                        "name": "Cultural Council VESIT",
                        "description": "Chocolate Day Transaction",
-                       "image": "https://example.com/your_logo",
                        "handler": function (response){
                         window.opener.window.postMessage(`RAZORPAY_SUCCESS`);
                         window.close()
