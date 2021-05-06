@@ -15,7 +15,7 @@ class SigningPage extends StatefulWidget {
 }
 
 class _SigningPageState extends State<SigningPage> {
-  bool signIn = true;
+  bool signIn = false;
 
   @override
   Widget build(BuildContext context) {

@@ -1,11 +1,30 @@
+import 'dart:html' as html;
 import 'dart:ui';
 
 import 'package:chocolate_day/constants/style_constants.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 import 'package:hive/hive.dart';
 
-class VerifyAccountPage extends StatelessWidget {
+// ignore: must_be_immutable
+class VerifyAccountPage extends StatefulWidget {
+  @override
+  _VerifyAccountPageState createState() => _VerifyAccountPageState();
+}
+
+class _VerifyAccountPageState extends State<VerifyAccountPage> {
+  bool isVerificationSentOnce = false;
+  FToast fToast;
+
+  @override
+  void initState() {
+    super.initState();
+    fToast = FToast();
+    fToast.init(context);
+  }
+
   @override
   Widget build(BuildContext context) {
     return SingleChildScrollView(
@@ -50,7 +69,7 @@ class VerifyAccountPage extends StatelessWidget {
                         child: Center(
                           child: Text("Log Out",
                               style:
-                                  kSubtitleStyle.copyWith(color: Colors.white)),
+                              kSubtitleStyle.copyWith(color: Colors.white)),
                         )),
                   ),
                 ),
@@ -94,12 +113,14 @@ class VerifyAccountPage extends StatelessWidget {
                         SizedBox(height: 30),
                         RawMaterialButton(
                           materialTapTargetSize:
-                              MaterialTapTargetSize.shrinkWrap,
+                          MaterialTapTargetSize.shrinkWrap,
                           highlightColor: Colors.transparent,
                           splashColor: Colors.transparent,
                           onPressed: () async {
-                            FirebaseAuth.instance.currentUser
-                                .sendEmailVerification();
+                            if (!isVerificationSentOnce)
+                              sendVerification();
+                            else
+                              html.window.location.reload();
                           },
                           child: Container(
                               width: MediaQuery.of(context).size.width * 0.85,
@@ -120,7 +141,10 @@ class VerifyAccountPage extends StatelessWidget {
                               padding: EdgeInsets.symmetric(
                                   horizontal: 35, vertical: 15),
                               child: Center(
-                                child: Text("Send email",
+                                child: Text(
+                                    isVerificationSentOnce
+                                        ? "Reload"
+                                        : "Send email",
                                     style: kSubtitleStyle.copyWith(
                                         color: Colors.white)),
                               )),
@@ -134,5 +158,29 @@ class VerifyAccountPage extends StatelessWidget {
             ),
           )),
     );
+  }
+
+  void sendVerification() {
+    FirebaseAuth.instance.currentUser.sendEmailVerification();
+
+    Widget toast = Container(
+      padding: EdgeInsets.symmetric(horizontal: 24.0, vertical: 12.0),
+      decoration: BoxDecoration(
+        borderRadius: BorderRadius.circular(25.0),
+        color: Colors.black,
+      ),
+      child: Text("Email sent",
+          style: kSubtitleStyle.copyWith(color: Colors.white)),
+    );
+
+    fToast.showToast(
+      child: toast,
+      gravity: ToastGravity.BOTTOM,
+      toastDuration: Duration(seconds: 2),
+    );
+
+    setState(() {
+      isVerificationSentOnce = true;
+    });
   }
 }

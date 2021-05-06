@@ -48,6 +48,33 @@ class _SignUpState extends State<SignUp> {
                 ),
               ),
               Container(
+                width: MediaQuery.of(context).size.width * 0.6,
+                decoration: BoxDecoration(
+                    color: Color.fromRGBO(32, 33, 92, 1),
+                    borderRadius: BorderRadius.circular(18),
+                    boxShadow: [
+                      BoxShadow(
+                        color: Color(0x085E636B),
+                        offset: Offset(0, 12),
+                        blurRadius: 16,
+                      )
+                    ]),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    Image.asset(
+                      'asset/illustrations/aasra_logo2.png',
+                      height: 50,
+                      width: 50,
+                    ),
+                    SizedBox(width: 10),
+                    Text("Donate now!",
+                        style: kSubtitleStyle.copyWith(color: Colors.white))
+                  ],
+                ),
+              ),
+              SizedBox(height: 10),
+              Container(
                 width: MediaQuery.of(context).size.width * 0.80,
                 child: Padding(
                   padding: EdgeInsets.all(10),

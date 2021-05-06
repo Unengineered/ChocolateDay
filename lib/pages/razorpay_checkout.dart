@@ -123,6 +123,7 @@ class _RazorpayCheckoutState extends State<RazorpayCheckout> {
           "receiverClass": product.toClass.toString().split('.')[1],
           "receiverEmail": product.toName,
           "receiverMessage": product.message,
+          "donation": product.countPrice
         };
 
         checkout['order']['chocolates'].add(chocolate);
@@ -166,46 +167,84 @@ class _RazorpayCheckoutState extends State<RazorpayCheckout> {
                     final body = jsonDecode(response.data.body);
                     print(body.toString());
 
-                    return Column(
-                      children: [
-                        Text("Total: Rs.${body['amount'] / 100}"),
-                        Text("Order id: ${body['id']}"),
-                        SizedBox(height: 10.0),
-                        RawMaterialButton(
-                          materialTapTargetSize:
-                              MaterialTapTargetSize.shrinkWrap,
-                          highlightColor: Colors.transparent,
-                          splashColor: Colors.transparent,
-                          onPressed: () {
-                            js.context.callMethod('open', [
-                              '/checkout.html?amount=${body['amount']}&order_id=${body['id']}'
-                            ]);
-                          },
-                          child: Container(
-                              width: MediaQuery.of(context).size.width * 0.85,
-                              decoration: BoxDecoration(
-                                  gradient: LinearGradient(
-                                    begin: Alignment.topLeft,
-                                    end: Alignment.bottomRight,
-                                    colors: [
-                                      Color(0xFF00AEFF),
-                                      Color(0xFF0076FF),
-                                    ],
-                                  ),
-                                  boxShadow: [
-                                    BoxShadow(
-                                        color: kShadowColor, blurRadius: 16.0)
-                                  ],
-                                  borderRadius: BorderRadius.circular(10)),
-                              padding: EdgeInsets.symmetric(
-                                  horizontal: 35, vertical: 15),
-                              child: Center(
-                                child: Text("Pay",
-                                    style: kSubtitleStyle.copyWith(
-                                        color: Colors.white)),
-                              )),
+                    return Padding(
+                      padding: const EdgeInsets.all(28.0),
+                      child: Container(
+                        padding: EdgeInsets.all(20),
+                        decoration: BoxDecoration(
+                            color: Colors.white,
+                            borderRadius: BorderRadius.circular(18),
+                            boxShadow: [
+                              BoxShadow(
+                                color: Color(0x085E636B),
+                                offset: Offset(0, 12),
+                                blurRadius: 16,
+                              )
+                            ]),
+                        child: Column(
+                          children: [
+                            Container(
+                              padding: EdgeInsets.symmetric(horizontal: 20),
+                              child: Row(
+                                mainAxisAlignment:
+                                    MainAxisAlignment.spaceBetween,
+                                children: [
+                                  Text("Total: "),
+                                  Text("Rs.${body['amount'] / 100}")
+                                ],
+                              ),
+                            ),
+                            Container(
+                              padding: EdgeInsets.symmetric(horizontal: 20),
+                              child: Row(
+                                mainAxisAlignment:
+                                    MainAxisAlignment.spaceBetween,
+                                children: [
+                                  Text("Order id: "),
+                                  Text("${body['id']}")
+                                ],
+                              ),
+                            ),
+                            SizedBox(height: 10.0),
+                            RawMaterialButton(
+                              materialTapTargetSize:
+                                  MaterialTapTargetSize.shrinkWrap,
+                              highlightColor: Colors.transparent,
+                              splashColor: Colors.transparent,
+                              onPressed: () {
+                                js.context.callMethod('open', [
+                                  '/checkout.html?amount=${body['amount']}&order_id=${body['id']}'
+                                ]);
+                              },
+                              child: Container(
+                                  width:
+                                      MediaQuery.of(context).size.width * 0.85,
+                                  decoration: BoxDecoration(
+                                      gradient: LinearGradient(
+                                        begin: Alignment.topLeft,
+                                        end: Alignment.bottomRight,
+                                        colors: [
+                                          Color(0xFF00AEFF),
+                                          Color(0xFF0076FF),
+                                        ],
+                                      ),
+                                      boxShadow: [
+                                        BoxShadow(
+                                            color: kShadowColor,
+                                            blurRadius: 16.0)
+                                      ],
+                                      borderRadius: BorderRadius.circular(10)),
+                                  padding: EdgeInsets.symmetric(
+                                      horizontal: 35, vertical: 15),
+                                  child: Center(
+                                    child: Text("Pay",
+                                        style: kSubtitleStyle.copyWith(
+                                            color: Colors.white)),
+                                  )),
+                            ),
+                          ],
                         ),
-                      ],
+                      ),
                     );
                   }
                   if (response.hasError)

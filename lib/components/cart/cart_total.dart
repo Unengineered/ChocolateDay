@@ -150,12 +150,12 @@ class _BillState extends State<Bill> {
                   ),
                   SizedBox(width: 5),
                   QuickDonationButton(
-                      amount: 20,
+                      amount: 30,
                       controller: donationController,
                       updateDonation: updateDonation),
                   SizedBox(width: 5),
                   QuickDonationButton(
-                      amount: 30,
+                      amount: 50,
                       controller: donationController,
                       updateDonation: updateDonation),
                 ],

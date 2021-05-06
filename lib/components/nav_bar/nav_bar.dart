@@ -25,7 +25,10 @@ class NavBar extends StatelessWidget {
         children: [
           Padding(
             padding: EdgeInsets.only(left: 8.0),
-            child: Image.asset('asset/illustrations/logo.png'),
+            child: Image.asset(
+              'asset/illustrations/logo2.png',
+              height: 35,
+            ),
           ),
           Spacer(),
           (navBarStyle == NavBarStyle.LoggedIn)

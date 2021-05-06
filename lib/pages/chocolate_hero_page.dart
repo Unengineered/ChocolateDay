@@ -264,7 +264,7 @@ class _HeroChocolatePageState extends State<HeroChocolatePage> {
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
-                      Text('Donate amount',
+                      Text("Donate to charity",
                           style: kSubtitleStyle.copyWith(color: Colors.black)),
                       Container(
                         height: 30,
