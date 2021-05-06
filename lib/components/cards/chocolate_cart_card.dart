@@ -82,7 +82,7 @@ class ChocolateCartCard extends StatelessWidget {
                           Row(
                             mainAxisAlignment: MainAxisAlignment.spaceBetween,
                             children: [
-                              Text("Rs. ${chocolate.price}",
+                              Text("Rs. ${(chocolateProduct.countPrice) ? chocolate.price : 0}",
                                   style: kPriceStyle.copyWith(
                                       fontSize: 18, color: Colors.white)),
                               GestureDetector(

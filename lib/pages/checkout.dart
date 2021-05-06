@@ -59,6 +59,7 @@ class _CheckoutState extends State<Checkout> {
           "receiverClass": product.toClass.toString().split('.')[1],
           "receiverEmail": product.toName,
           "receiverMessage": product.message,
+          "donation" : product.countPrice
         };
 
         checkout['order']['chocolates'].add(chocolate);

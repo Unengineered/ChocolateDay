@@ -187,7 +187,7 @@ class _BillState extends State<Bill> {
             ],
           ),
           SizedBox(height: 20),
-          (widget.cartValue != 0.0)
+          (total != 0.0)
               ? Column(
                   children: [
                     RawMaterialButton(
@@ -249,7 +249,7 @@ class _BillState extends State<Bill> {
                       padding:
                           EdgeInsets.symmetric(horizontal: 35, vertical: 15),
                       child: Center(
-                        child: Text("Empty cart",
+                        child: Text("Total is zero",
                             style:
                                 kSubtitleStyle.copyWith(color: Colors.white)),
                       )),
