@@ -77,6 +77,7 @@ class _VerifyAccountPageState extends State<VerifyAccountPage> {
                   mainAxisAlignment: MainAxisAlignment.end,
                   children: [
                     Row(
+                      crossAxisAlignment: CrossAxisAlignment.center,
                       mainAxisAlignment: MainAxisAlignment.start,
                       children: [
                         Container(
@@ -84,6 +85,12 @@ class _VerifyAccountPageState extends State<VerifyAccountPage> {
                             height: MediaQuery.of(context).size.width * 0.3,
                             child: Image.asset(
                                 'asset/illustrations/cult-white-final.png',
+                                fit: BoxFit.contain)),
+                        SizedBox(width: 10),
+                        Container(
+                            width: MediaQuery.of(context).size.width * 0.3,
+                            height: MediaQuery.of(context).size.width * 0.3,
+                            child: Image.asset('asset/illustrations/sort.png',
                                 fit: BoxFit.contain)),
                       ],
                     ),
