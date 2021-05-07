@@ -1,3 +1,4 @@
+import 'package:chocolate_day/components/signing/aasra_home_card.dart';
 import 'package:chocolate_day/constants/style_constants.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
@@ -47,32 +48,7 @@ class _SignInState extends State<SignIn> {
               ),
 
               //SORT
-              Container(
-                width: MediaQuery.of(context).size.width * 0.6,
-                decoration: BoxDecoration(
-                    color: Color.fromRGBO(32, 33, 92, 1),
-                    borderRadius: BorderRadius.circular(18),
-                    boxShadow: [
-                      BoxShadow(
-                        color: Color(0x085E636B),
-                        offset: Offset(0, 12),
-                        blurRadius: 16,
-                      )
-                    ]),
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    Image.asset(
-                      'asset/illustrations/aasra_logo2.png',
-                      height: 50,
-                      width: 50,
-                    ),
-                    SizedBox(width: 10),
-                    Text("Donate now!",
-                        style: kSubtitleStyle.copyWith(color: Colors.white))
-                  ],
-                ),
-              ),
+              AasraHomeCard(),
 
               SizedBox(height: 10),
 
@@ -103,12 +79,12 @@ class _SignInState extends State<SignIn> {
                             children: [
                               TextFormField(
                                   autovalidateMode:
-                                      AutovalidateMode.onUserInteraction,
+                                  AutovalidateMode.onUserInteraction,
                                   validator: (value) {
                                     if (value == null || value == '')
                                       return 'Please enter an email address';
                                     RegExp regex =
-                                        RegExp(r"^[0-9a-zA-Z.]+@ves.ac.in");
+                                    RegExp(r"^[0-9a-zA-Z.]+@ves.ac.in");
                                     if (!regex.hasMatch(value))
                                       return "Enter a ves.ac.in email id";
                                     return null;
@@ -121,14 +97,14 @@ class _SignInState extends State<SignIn> {
                               SizedBox(height: 10),
                               TextFormField(
                                   autovalidateMode:
-                                      AutovalidateMode.onUserInteraction,
+                                  AutovalidateMode.onUserInteraction,
                                   obscureText: obscurePassword,
                                   decoration: kFormInputDecoration.copyWith(
                                       suffix: GestureDetector(
                                           onTap: () {
                                             setState(() {
                                               obscurePassword =
-                                                  !obscurePassword;
+                                              !obscurePassword;
                                             });
                                           },
                                           child: Icon(
@@ -144,8 +120,8 @@ class _SignInState extends State<SignIn> {
                               SizedBox(height: 10),
                               (errorMsg != '')
                                   ? Text(errorMsg,
-                                      style: kSubtitleStyle.copyWith(
-                                          color: Colors.red))
+                                  style: kSubtitleStyle.copyWith(
+                                      color: Colors.red))
                                   : Container(),
                             ],
                           ),
@@ -158,49 +134,49 @@ class _SignInState extends State<SignIn> {
                       children: [
                         !isLoading
                             ? RawMaterialButton(
-                                materialTapTargetSize:
-                                    MaterialTapTargetSize.shrinkWrap,
-                                highlightColor: Colors.transparent,
-                                splashColor: Colors.transparent,
-                                onPressed: () async {
-                                  if (_formKey.currentState.validate()) {
-                                    print('Validation successful, logging in');
-                                    setState(() {
-                                      isLoading = true;
-                                    });
-                                    firebaseSignIn(
-                                        email: email.text,
-                                        password: password.text);
-                                  } else {
-                                    print("Validation failed");
-                                  }
-                                },
-                                child: Container(
-                                  decoration: BoxDecoration(
-                                      gradient: LinearGradient(
-                                        begin: Alignment.topLeft,
-                                        end: Alignment.bottomRight,
-                                        colors: [
-                                          Color(0xFF00AEFF),
-                                          Color(0xFF0076FF),
-                                        ],
-                                      ),
-                                      boxShadow: [
-                                        BoxShadow(
-                                            color: kShadowColor,
-                                            blurRadius: 16.0)
-                                      ],
-                                      borderRadius: BorderRadius.circular(10)),
-                                  padding: EdgeInsets.symmetric(
-                                      horizontal: 35, vertical: 15),
-                                  child: Text("Login",
-                                      style: kSubtitleStyle.copyWith(
-                                          color: Colors.white)),
+                          materialTapTargetSize:
+                          MaterialTapTargetSize.shrinkWrap,
+                          highlightColor: Colors.transparent,
+                          splashColor: Colors.transparent,
+                          onPressed: () async {
+                            if (_formKey.currentState.validate()) {
+                              print('Validation successful, logging in');
+                              setState(() {
+                                isLoading = true;
+                              });
+                              firebaseSignIn(
+                                  email: email.text,
+                                  password: password.text);
+                            } else {
+                              print("Validation failed");
+                            }
+                          },
+                          child: Container(
+                            decoration: BoxDecoration(
+                                gradient: LinearGradient(
+                                  begin: Alignment.topLeft,
+                                  end: Alignment.bottomRight,
+                                  colors: [
+                                    Color(0xFF00AEFF),
+                                    Color(0xFF0076FF),
+                                  ],
                                 ),
-                              )
+                                boxShadow: [
+                                  BoxShadow(
+                                      color: kShadowColor,
+                                      blurRadius: 16.0)
+                                ],
+                                borderRadius: BorderRadius.circular(10)),
+                            padding: EdgeInsets.symmetric(
+                                horizontal: 35, vertical: 15),
+                            child: Text("Login",
+                                style: kSubtitleStyle.copyWith(
+                                    color: Colors.white)),
+                          ),
+                        )
                             : CircularProgressIndicator(
-                                valueColor:
-                                    AlwaysStoppedAnimation<Color>(Colors.black))
+                            valueColor:
+                            AlwaysStoppedAnimation<Color>(Colors.black))
                       ],
                     ),
                   ],
@@ -213,8 +189,7 @@ class _SignInState extends State<SignIn> {
     );
   }
 
-  void firebaseSignIn(
-      {@required String email, @required String password}) async {
+  void firebaseSignIn({@required String email, @required String password}) async {
     try {
       await FirebaseAuth.instance
           .signInWithEmailAndPassword(email: email.trim(), password: password);
