@@ -26,6 +26,14 @@ var kTitle1Style = TextStyle(
   decoration: TextDecoration.none,
 );
 
+var kParaStyle = TextStyle(
+  fontSize: 19.0,
+  height: 1.6,
+  color: kPrimaryLabelColor,
+  fontFamily: 'Telegraf',
+  decoration: TextDecoration.none,
+);
+
 var kCardTitleStyle = TextStyle(
   fontWeight: FontWeight.bold,
   color: Colors.white,
@@ -129,6 +137,11 @@ var kFormInputDecoration = InputDecoration(
       borderSide: BorderSide(color: Colors.red, width: 1.0),
       borderRadius: BorderRadius.all(Radius.circular(10.0))),
 );
+
+var aasraGradient = LinearGradient(
+    begin: Alignment.centerLeft,
+    end: Alignment.centerRight,
+    colors: [Color(0xFF2A52BA), Color(0xFF0D6FCA)]);
 
 var orderBackgrounds = {
   'failed': LinearGradient(

@@ -1,3 +1,4 @@
+import 'package:chocolate_day/components/cards/aasra_card.dart';
 import 'package:chocolate_day/components/cards/chocolate_card.dart';
 import 'package:chocolate_day/model/chocolates.dart';
 import 'package:chocolate_day/pages/chocolate_hero_page.dart';
@@ -15,16 +16,13 @@ class _ChocolateCardListState extends State<ChocolateCardList> {
   List<Widget> chocolateListWidgets(){
     List<Widget> cards = [];
 
-    // cards.add(Padding(
-    //     padding: EdgeInsets.only(bottom: 30),
-    //     child: GestureDetector(
-    //         onTap: () {
-    //           Navigator.of(context).push(
-    //               MaterialPageRoute(builder: (context) => CouponHeroPage()));
-    //         },
-    //         child: Hero(
-    //             tag: coupons[0].title,
-    //             child: CouponCard(coupon: coupons[0])))));
+    cards.add(Padding(
+        padding: EdgeInsets.only(bottom: 30),
+        child: GestureDetector(
+            onTap: () {
+              Navigator.of(context).pushNamed('/aasra');
+            },
+            child: Hero(tag: "aasra_card", child: AasraCard()))));
 
     for (var chocolate in chocolates) {
       cards.add(

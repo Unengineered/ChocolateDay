@@ -5,6 +5,7 @@ import 'package:chocolate_day/constants/class.dart';
 import 'package:chocolate_day/constants/india_state.dart';
 import 'package:chocolate_day/constants/style_constants.dart';
 import 'package:chocolate_day/model/products/coupon_product.dart';
+import 'package:chocolate_day/pages/aasra_page.dart';
 import 'package:chocolate_day/pages/account_page.dart';
 import 'package:chocolate_day/pages/cart.dart';
 import 'package:chocolate_day/pages/home_page.dart';
@@ -45,6 +46,7 @@ class _MyAppState extends State<MyApp> {
         '/': (context) => MainScreen(),
         '/cart': (context) => Cart(),
         '/account': (context) => AccountPage(),
+        '/aasra': (context) => AasraPage(),
       },
       initialRoute: '/',
     );
