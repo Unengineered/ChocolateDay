@@ -1,10 +1,12 @@
 import 'dart:convert';
+import 'dart:html' as html;
 
 import 'package:chocolate_day/components/aasra/donation_amount_board.dart';
 import 'package:chocolate_day/components/aasra/donation_controller.dart';
 import 'package:chocolate_day/components/aasra/foundation_details.dart';
 import 'package:chocolate_day/components/aasra/highlight_board.dart';
 import 'package:chocolate_day/components/cards/aasra_card.dart';
+import 'package:chocolate_day/constants/style_constants.dart';
 import 'package:chocolate_day/constants/url.dart';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
@@ -17,6 +19,16 @@ class AasraPage extends StatefulWidget {
 class _AasraPageState extends State<AasraPage> {
   @override
   Widget build(BuildContext context) {
+    final userAgent = html.window.navigator.userAgent.toString().toLowerCase();
+    // smartphone
+    if (!(userAgent.contains("iphone") || userAgent.contains("android")))
+      return Scaffold(
+          body: Center(
+              child: Text(
+        "This web page is only available on mobile",
+        style: kTitle2Style,
+      )));
+
     return Scaffold(
       body: SingleChildScrollView(
         child: Container(

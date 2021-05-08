@@ -1,3 +1,5 @@
+import 'dart:html' as html;
+
 import 'package:chocolate_day/components/cart/cart_items.dart';
 import 'package:chocolate_day/components/cart/cart_total.dart';
 import 'package:chocolate_day/constants/style_constants.dart';
@@ -8,9 +10,24 @@ import 'package:flutter/material.dart';
 import 'package:hive/hive.dart';
 import 'package:hive_flutter/hive_flutter.dart';
 
-class Cart extends StatelessWidget {
+class Cart extends StatefulWidget {
+  @override
+  _CartState createState() => _CartState();
+}
+
+class _CartState extends State<Cart> {
   @override
   Widget build(BuildContext context) {
+    final userAgent = html.window.navigator.userAgent.toString().toLowerCase();
+    // smartphone
+    if (!(userAgent.contains("iphone") || userAgent.contains("android")))
+      return Scaffold(
+          body: Center(
+              child: Text(
+        "This web page is only available on mobile",
+        style: kTitle2Style,
+      )));
+
     return Scaffold(
       body: Container(
         child: FutureBuilder(
@@ -92,7 +109,7 @@ class _CartItemListState extends State<CartItemList> {
                                       decoration: BoxDecoration(
                                         borderRadius: BorderRadius.circular(12),
                                         color:
-                                            kPrimaryLabelColor.withOpacity(0.8),
+                                        kPrimaryLabelColor.withOpacity(0.8),
                                       ),
                                       child: Icon(Icons.close,
                                           color: Colors.white),
@@ -101,7 +118,7 @@ class _CartItemListState extends State<CartItemList> {
                                   SizedBox(width: 15),
                                   Expanded(
                                     child:
-                                        Text("Cart", style: kLargeTitleStyle),
+                                    Text("Cart", style: kLargeTitleStyle),
                                   )
                                 ],
                               ),

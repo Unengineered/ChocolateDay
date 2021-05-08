@@ -1,4 +1,5 @@
 import 'dart:convert';
+import 'dart:html' as html;
 
 import 'package:chocolate_day/constants/style_constants.dart';
 import 'package:chocolate_day/constants/url.dart';
@@ -13,12 +14,33 @@ import 'package:flutter/material.dart';
 import 'package:hive/hive.dart';
 import 'package:http/http.dart' as http;
 
-class AccountPage extends StatelessWidget {
-  final Future<http.Response> accountInfo = http
-      .get(Uri.parse('$kUserDataUrl/${FirebaseAuth.instance.currentUser.uid}'));
+class AccountPage extends StatefulWidget {
+  @override
+  _AccountPageState createState() => _AccountPageState();
+}
+
+class _AccountPageState extends State<AccountPage> {
+  Future<http.Response> accountInfo;
+
+  @override
+  void initState() {
+    super.initState();
+    accountInfo = http.get(
+        Uri.parse('$kUserDataUrl/${FirebaseAuth.instance.currentUser.uid}'));
+  }
 
   @override
   Widget build(BuildContext context) {
+    final userAgent = html.window.navigator.userAgent.toString().toLowerCase();
+    // smartphone
+    if (!(userAgent.contains("iphone") || userAgent.contains("android")))
+      return Scaffold(
+          body: Center(
+              child: Text(
+        "This web page is only available on mobile",
+        style: kTitle2Style,
+      )));
+
     return Scaffold(
       body: Padding(
         padding: EdgeInsets.all(10),
