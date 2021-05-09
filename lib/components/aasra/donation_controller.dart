@@ -45,8 +45,14 @@ class _DonationCollectorState extends State<DonationCollector> {
                 ),
                 controller: emailController,
               ),
-
-              SizedBox(height: 20),
+              SizedBox(height: 5),
+              Padding(
+                padding: EdgeInsets.symmetric(horizontal: 8.0),
+                child: Text(
+                    "Those who don't have ves.ac.in email IDs or want to donate anonymously, use this email id: wellwisher@ves.ac.in",
+                    style: kSubtitleStyle.copyWith(fontSize: 10)),
+              ),
+              SizedBox(height: 15),
               TextFormField(
                 autovalidateMode: AutovalidateMode.onUserInteraction,
                 validator: (value) {
