@@ -71,16 +71,15 @@ enum Class {
   @HiveField(32)
   D16A,
   @HiveField(33)
-  D16B,
-  @HiveField(34)
-  D17A,
-  @HiveField(35)
-  D17B,
-  @HiveField(36)
-  D17C,@HiveField(37)
+  D16B,@HiveField(34)
+D17A,@HiveField(35)
+D17B,@HiveField(36)
+D17C,@HiveField(37)
 D18,@HiveField(38)
 D19A,@HiveField(39)
 D19B,@HiveField(40)
 D19C,@HiveField(41)
 D20,@HiveField(42)
+MCA1A,@HiveField(43)
+MCA1B,@HiveField(44)
 Division,}
