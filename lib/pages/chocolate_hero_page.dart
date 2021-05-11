@@ -290,61 +290,61 @@ class _HeroChocolatePageState extends State<HeroChocolatePage> {
                   highlightColor: Colors.transparent,
                   splashColor: Colors.transparent,
                   onPressed: () {
-                    if (_formKey.currentState.validate()) {
-                      if (selectedEmail != '' &&
-                          selectedEmail != null &&
-                          selectedEmail != 'Choose Email') {
-                        print(selectedEmail);
-                        addToCart(ChocolateProduct(
-                            chocolateType: widget.chocolate.chocolateType,
-                            toClass: selectedClass,
-                            senderName: (senderNameController.text == '' ||
-                                    senderNameController.text == null)
-                                ? null
-                                : senderNameController.text,
-                            toName: selectedEmail,
-                            message: messageController.text,
-                            cost: widget.chocolate.price,
-                            countPrice: countPrice));
-
-                        print("Showing toast");
-                        Widget toast = Container(
-                          padding: EdgeInsets.symmetric(
-                              horizontal: 24.0, vertical: 12.0),
-                          decoration: BoxDecoration(
-                            borderRadius: BorderRadius.circular(25.0),
-                            color: Colors.black,
-                          ),
-                          child: Row(
-                            mainAxisSize: MainAxisSize.min,
-                            children: [
-                              Icon(
-                                CupertinoIcons.bag,
-                                color: Colors.white,
-                              ),
-                              SizedBox(
-                                width: 12.0,
-                              ),
-                              Text("Item added to cart",
-                                  style: kSubtitleStyle.copyWith(
-                                      color: Colors.white)),
-                            ],
-                          ),
-                        );
-
-                        fToast.showToast(
-                          child: toast,
-                          gravity: ToastGravity.BOTTOM,
-                          toastDuration: Duration(seconds: 2),
-                        );
-
-                        Navigator.of(context).pop();
-                      } else {
-                        setState(() {
-                          error = "Please choose an email";
-                        });
-                      }
-                    }
+                    // if (_formKey.currentState.validate()) {
+                    //   if (selectedEmail != '' &&
+                    //       selectedEmail != null &&
+                    //       selectedEmail != 'Choose Email') {
+                    //     print(selectedEmail);
+                    //     addToCart(ChocolateProduct(
+                    //         chocolateType: widget.chocolate.chocolateType,
+                    //         toClass: selectedClass,
+                    //         senderName: (senderNameController.text == '' ||
+                    //                 senderNameController.text == null)
+                    //             ? null
+                    //             : senderNameController.text,
+                    //         toName: selectedEmail,
+                    //         message: messageController.text,
+                    //         cost: widget.chocolate.price,
+                    //         countPrice: countPrice));
+                    //
+                    //     print("Showing toast");
+                    //     Widget toast = Container(
+                    //       padding: EdgeInsets.symmetric(
+                    //           horizontal: 24.0, vertical: 12.0),
+                    //       decoration: BoxDecoration(
+                    //         borderRadius: BorderRadius.circular(25.0),
+                    //         color: Colors.black,
+                    //       ),
+                    //       child: Row(
+                    //         mainAxisSize: MainAxisSize.min,
+                    //         children: [
+                    //           Icon(
+                    //             CupertinoIcons.bag,
+                    //             color: Colors.white,
+                    //           ),
+                    //           SizedBox(
+                    //             width: 12.0,
+                    //           ),
+                    //           Text("Item added to cart",
+                    //               style: kSubtitleStyle.copyWith(
+                    //                   color: Colors.white)),
+                    //         ],
+                    //       ),
+                    //     );
+                    //
+                    //     fToast.showToast(
+                    //       child: toast,
+                    //       gravity: ToastGravity.BOTTOM,
+                    //       toastDuration: Duration(seconds: 2),
+                    //     );
+                    //
+                    //     Navigator.of(context).pop();
+                    //   } else {
+                    //     setState(() {
+                    //       error = "Please choose an email";
+                    //     });
+                    //   }
+                    // }
                   },
                   child: Container(
                       width: MediaQuery.of(context).size.width * 0.85,
@@ -364,7 +364,7 @@ class _HeroChocolatePageState extends State<HeroChocolatePage> {
                       padding:
                           EdgeInsets.symmetric(horizontal: 35, vertical: 15),
                       child: Center(
-                        child: Text("Add to cart",
+                        child: Text("Chocolate day has ended",
                             style:
                                 kSubtitleStyle.copyWith(color: Colors.white)),
                       )),
