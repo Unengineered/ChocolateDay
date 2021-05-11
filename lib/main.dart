@@ -7,7 +7,6 @@ import 'package:chocolate_day/constants/style_constants.dart';
 import 'package:chocolate_day/model/products/coupon_product.dart';
 import 'package:chocolate_day/pages/aasra_page.dart';
 import 'package:chocolate_day/pages/account_page.dart';
-import 'package:chocolate_day/pages/cart.dart';
 import 'package:chocolate_day/pages/home_page.dart';
 import 'package:chocolate_day/pages/signing_page.dart';
 import 'package:chocolate_day/pages/verify_account_page.dart';
@@ -44,7 +43,7 @@ class _MyAppState extends State<MyApp> {
       title: 'Chocolate Day',
       routes: {
         '/': (context) => MainScreen(),
-        '/cart': (context) => Cart(),
+        //'/cart': (context) => Cart(),
         '/account': (context) => AccountPage(),
         '/aasra': (context) => AasraPage(),
       },
